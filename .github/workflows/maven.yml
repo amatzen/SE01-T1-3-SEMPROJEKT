@@ -6,8 +6,16 @@ name: Build Maven project
 on:
   push:
     branches: [ master ]
+    paths:
+      - '**.java'
+    paths-ignore:
+      - 'logbog/**'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - 'logbog/**'
+    paths:
+      - '**.java'
 
 jobs:
   build:
