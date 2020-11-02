@@ -6,10 +6,14 @@ name: Build Maven project
 on:
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - 'logbog/**'
+      - 'uml/**'
+  push:
+    branches: [ master ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
