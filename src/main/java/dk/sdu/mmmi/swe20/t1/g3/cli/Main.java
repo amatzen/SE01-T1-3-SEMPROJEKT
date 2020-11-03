@@ -1,9 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.cli;
 
-import worldofzuul.Game;
-
 public class Main {
-
     public static void main(String[] args) {
         Scenes scenes = new Scenes();
 
@@ -13,7 +10,16 @@ public class Main {
         // Convert
         scenes.convertStringsToScenes();
 
+        welcome();
 
+        Game g = new Game("start");
+        g.play();
+
+    }
+
+    public static void welcome() {
+        System.out.println("");
+        System.out.println("🐟 Welcome to World of Fish");
     }
     
 }
