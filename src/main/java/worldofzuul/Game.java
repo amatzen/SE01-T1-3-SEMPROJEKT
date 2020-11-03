@@ -1,8 +1,8 @@
 package worldofzuul;
 
-public class Game 
+public abstract class Game
 {
-    private Parser parser;
+    protected Parser parser;
     private Room currentRoom;
         
 
@@ -39,7 +39,7 @@ public class Game
         currentRoom = outside;
     }
 
-    public void play() 
+    public void play()
     {            
         printWelcome();
 
@@ -62,7 +62,7 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) 
+    protected boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -94,7 +94,7 @@ public class Game
         parser.showCommands();
     }
 
-    private void goRoom(Command command) 
+    public void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
             System.out.println("Go where?");
