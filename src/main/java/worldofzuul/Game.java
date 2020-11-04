@@ -114,7 +114,7 @@ public abstract class Game
         }
     }
 
-    private boolean quit(Command command) 
+    protected boolean quit(Command command)
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");

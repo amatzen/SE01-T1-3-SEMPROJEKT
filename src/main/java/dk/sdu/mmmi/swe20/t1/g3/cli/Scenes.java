@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static dk.sdu.mmmi.swe20.t1.g3.Utils.isIntelliJ;
-
 public class Scenes {
     public static ArrayList<Scene> scenes = new ArrayList<Scene>();
 
     public void loadScenes() {
         createScene(
                 "start",
+                "Start",
                 "Velkommen til World of Fish!",
                 Map.of(
                         "venstre", "strand"
@@ -20,8 +19,9 @@ public class Scenes {
         );
         createScene(
                 "strand",
+                "Stranden",
                 "Velkommen til Stranden!",
-                Map.of("Tilbage", "start")
+                Map.of("tilbage", "start")
         );
     }
 
@@ -38,26 +38,21 @@ public class Scenes {
             scene.setExits(sce);
 
         });
-
-        if(isIntelliJ()) {
-            // Log to debugger
-            scenes.forEach(scene -> {});
-        }
     }
 
     /*
-     * Constructor without Tasks
+     * Create Scene without Tasks
      *
      * Slug is required, a unique string identifier
      * Description is required, which will be public for the end user
      * Then exits as a Key-Value Map. The KV-Map is formatted as { ExitDescription<String>, ExitSlug<String> }
      */
-    void createScene(String slug, String description, Map<String, String> exitsString) {
-        scenes.add(new Scene(slug, description, exitsString));
+    void createScene(String slug, String name, String description, Map<String, String> exitsString) {
+        scenes.add(new Scene(slug, name, description, exitsString));
     }
 
     /*
-     * Constructor with Tasks
+     * Create Scene with Tasks
      *
      * Slug is required, a unique string identifier
      * Description is required, which will be public for the end user
@@ -65,8 +60,8 @@ public class Scenes {
      *
      * Then options as an ArrayList. The ArrayList is formatted as [TaskSlug<String>...]
      */
-    void createScene(String slug, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
-        scenes.add(new Scene(slug, description, exitsString, tasks));
+    void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
+        scenes.add(new Scene(slug, name, description, exitsString, tasks));
     }
 
     /*
