@@ -2,13 +2,11 @@ package dk.sdu.mmmi.swe20.t1.g3.cli;
 
 public class Main {
     public static void main(String[] args) {
-        Scenes scenes = new Scenes();
-
         // Load Scenes
-        scenes.loadScenes();
+        Scenes.loadScenes();
 
         // Convert
-        scenes.convertStringsToScenes();
+        Scenes.convertStringsToScenes();
 
         welcome();
 

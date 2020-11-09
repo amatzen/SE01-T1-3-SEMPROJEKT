@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// Static class
 public class Scenes {
     public static ArrayList<Scene> scenes = new ArrayList<Scene>();
 
-    public void loadScenes() {
+    public static void loadScenes() {
         createScene(
                 "start",
                 "Start",
@@ -25,7 +26,7 @@ public class Scenes {
         );
     }
 
-    public void convertStringsToScenes() {
+    public static void convertStringsToScenes() {
         scenes.forEach(scene -> {
             HashMap<String, String> data = scene.getExitsString();
 
@@ -47,7 +48,7 @@ public class Scenes {
      * Description is required, which will be public for the end user
      * Then exits as a Key-Value Map. The KV-Map is formatted as { ExitDescription<String>, ExitSlug<String> }
      */
-    void createScene(String slug, String name, String description, Map<String, String> exitsString) {
+    static void createScene(String slug, String name, String description, Map<String, String> exitsString) {
         scenes.add(new Scene(slug, name, description, exitsString));
     }
 
@@ -60,7 +61,7 @@ public class Scenes {
      *
      * Then options as an ArrayList. The ArrayList is formatted as [TaskSlug<String>...]
      */
-    void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
+    static void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
         scenes.add(new Scene(slug, name, description, exitsString, tasks));
     }
 
