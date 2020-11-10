@@ -1,9 +1,9 @@
 ### Tirsdag - Projektarbjede
 **Sted:** SDU  
 **Tidspunkt:** 8.00 - 12.00  
-**Forberedelse:** Overvejelse af Desgin.  
-**Dagsorden:**  Der skal laves en overblik over baner og laves i figma.
-**Tilstede:** Alexander, Christian, Frederik B, Simon, lau, Frederik G  
-**Referat:** Alexander Programets backend Frederik B, Simon og Frederik G lavet desgin af banerne i GUI i et program der hedder Figma, der var billeder der blev lavet om til 8-bit grafik og fjernet baggrunde fra billeder og sat ind i Figma, der blev også aftalt hvem der skulle tage mødet og der blev også holdt møde med Henrik med hele guppen.
+**Forberedelse:** Færdiggørelse af poster.  
+**Dagsorden:** Der skal laves spildesign og krav
+**Tilstede:** Alexander, Christian, Frederik B, Simon og Frederik G  
+**Referat:**  Her blev der talt om hvordan vi ville skabe vores spil Frederik G tegnet på tavlen og ladet en basic tegning af hvordan spille skulle se ud der blev talt om i gruppe hvordan vi skulle lave spillet og hvordan man skulle få points i det og hvordan man skal kunne vinde det Der blev også holdt gruppemøde med Henrik.
 
 **Afholdt:** Fysisk møde
