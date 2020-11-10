@@ -15,14 +15,96 @@ public class Scenes {
                 "Start",
                 "Velkommen til World of Fish!",
                 Map.of(
-                        "venstre", "strand"
+                        "højre", "skov"
+                )
+        );
+
+        createScene(
+                "skov",
+                "Skoven",
+                "Velkommen til skoven",
+                Map.of(
+                        "højre", "strand",
+                        "venstre", "start"
                 )
         );
         createScene(
                 "strand",
                 "Stranden",
                 "Velkommen til Stranden!",
-                Map.of("tilbage", "start")
+                Map.of(
+                        "venstre", "skov",
+                        "højre", "strandv2",
+                        "ned", "hav"
+                        )
+        );
+        createScene(
+                "strandv2",
+                "Strandenv2",
+                "Du befinder dig stadig på Stranden!",
+                Map.of(
+                        "venstre", "strand",
+                        "ned", "hav")
+        );
+        createScene(
+                "hav",
+                "Havet",
+                "Velkommen til havet!",
+                Map.of(
+                        "op", "strand",
+                        "ned","havbund",
+                        "højre", "havv2",
+                        "ventre", "havv3"
+                )
+        );
+        createScene(
+                "havv2",
+                "Havetv2",
+                "Velkommen til havetv2!",
+                Map.of(
+                        "op", "strandv2",
+                        "venstre", "hav",
+                        "ned", "koralrev"
+                )
+        );
+        createScene(
+                "havv3",
+                "Havetv3",
+                "Velkommen til havetv3!",
+                Map.of(
+                        "op", "strand",
+                        "højre", "hav",
+                        "ned", "skibsvrag"
+                )
+        );
+
+        createScene(
+                "havbund",
+                "Havbunden",
+                "Velkommen til havbunden!",
+                Map.of(
+                        "op", "hav",
+                        "højre", "koralrev",
+                        "venstre","skibsvrag"
+                )
+        );
+        createScene(
+                "koralrev",
+               "Koralrevet",
+                "Velkommen til koralrevet!",
+                Map.of(
+                        "op", "hav",
+                        "venstre", "havbund"
+                )
+        );
+        createScene(
+                "skibsvrag",
+                "Skibsvraget",
+                "Velkommen til skibsvraget!",
+                Map.of(
+                        "op", "hav",
+                        "højre", "havbund"
+                )
         );
     }
 
