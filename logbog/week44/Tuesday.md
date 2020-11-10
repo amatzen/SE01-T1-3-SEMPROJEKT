@@ -1,9 +1,9 @@
 ### Tirsdag - Projektarbjede
 **Sted:** SDU  
 **Tidspunkt:** 8.00 - 12.00  
-**Forberedelse:** ingen ting.  
-**Dagsorden:**   UML diagram, storyline, report.
-**Tilstede:** Alexander, Christian, Frederik B og Simon  
-**Referat:** Idag skulle vi lave UML diagram dette blev gjort af Alexander på computer og med hjælp fra Frederik B, Alexander lavet også på backend programmet så vi kan komme i gang med at lave rum der blev holdt møde med Henrik? hvor blev fast lagt hvor langt vi var, Simon og Christian stå for storyline og lavet lidt på report. Lektier: Simon skal lave storyline og degsin færdigt, Frederik B UML diagram færdigt, Alexander skal programmer backend færdigt, Lau skal have kage med, Frederik G skal indsætte problemtræ og problemanalyse og lave non-funktion krav færdigt og Christian skal lave logboge,
+**Forberedelse:** Overvejelse af Desgin.  
+**Dagsorden:**  Der skal laves en overblik over baner og laves i figma.
+**Tilstede:** Alexander, Christian, Frederik B, Simon, lau, Frederik G  
+**Referat:** Alexander Programets backend Frederik B, Simon og Frederik G lavet desgin af banerne i GUI i et program der hedder Figma, der var billeder der blev lavet om til 8-bit grafik og fjernet baggrunde fra billeder og sat ind i Figma, der blev også aftalt hvem der skulle tage mødet og der blev også holdt møde med Henrik med hele guppen.
 
 **Afholdt:** Fysisk møde
