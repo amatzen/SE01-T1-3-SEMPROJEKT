@@ -39,7 +39,7 @@ public class Scene extends worldofzuul.Room {
     private void displayExits() {
         System.out.println("Du har følgende udgange:");
         exitsString.forEach((key, value) -> {
-            System.out.println(key + " -> " + value);
+            System.out.println(key + " -> " + Scenes.getSceneBySlug(value).getName());
         });
         System.out.println();
     }
@@ -55,6 +55,7 @@ public class Scene extends worldofzuul.Room {
         return tasks;
     }
     public String getDescription() { return super.getShortDescription(); }
+    public String getName() { return name; }
 
     @Override
     public Scene getExit(String direction) {
