@@ -43,7 +43,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dk.sdu.mmmi.swe20.t1.g3.cli.Main</mainClass>
+                            <mainClass>dk.sdu.mmmi.swe20.t1.g3.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
