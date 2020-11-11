@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.swe20.t1.g3.gui;
+package dk.sdu.mmmi.swe20.t1.g3;
 
 public class Hotkeys {
     // Movement Keys

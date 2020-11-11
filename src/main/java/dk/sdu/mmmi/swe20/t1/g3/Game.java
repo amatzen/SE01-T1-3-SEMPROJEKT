@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.swe20.t1.g3.cli;
+package dk.sdu.mmmi.swe20.t1.g3;
 
 import worldofzuul.Command;
 import worldofzuul.CommandWord;

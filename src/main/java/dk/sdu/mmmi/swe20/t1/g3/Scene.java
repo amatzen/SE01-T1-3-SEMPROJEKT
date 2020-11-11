@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.swe20.t1.g3.cli;
+package dk.sdu.mmmi.swe20.t1.g3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +11,8 @@ public class Scene extends worldofzuul.Room {
     private HashMap<String, Scene> exits;
     private ArrayList<String> tasksString;
     private ArrayList<Task> tasks;
+    private ArrayList<String> itemsString;
+    private ArrayList<Item> items;
 
     // Constructor without any particular options / games
     public Scene(String slug, String name, String description, Map<String, String> exits) {
