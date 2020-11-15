@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.swe20.t1.g3;
+package dk.sdu.mmmi.swe20.t1.g3.Objects;
 
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
 

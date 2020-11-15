@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.swe20.t1.g3;
 
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
 import worldofzuul.Command;
