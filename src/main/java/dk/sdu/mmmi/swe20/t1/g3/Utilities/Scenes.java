@@ -1,4 +1,6 @@
-package dk.sdu.mmmi.swe20.t1.g3;
+package dk.sdu.mmmi.swe20.t1.g3.Utilities;
+
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,6 @@ public class Scenes {
                         "højre", "skov"
                 )
         );
-
         createScene(
                 "skov",
                 "Skoven",

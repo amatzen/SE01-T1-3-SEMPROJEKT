@@ -15,5 +15,9 @@ buildNumber.properties
 *.iml
 /out
 
+# FXGL
+logs/
+system/
+
 # Environment Variables
 .env
