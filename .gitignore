@@ -17,6 +17,7 @@ buildNumber.properties
 
 # FXGL
 logs/
+system/
 
 # Environment Variables
 .env
