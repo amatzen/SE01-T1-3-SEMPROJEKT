@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.swe20.t1.g3;
 
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.swe20.t1.g3;
+package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
 public class Utils {
     public static boolean isIntelliJ() {
