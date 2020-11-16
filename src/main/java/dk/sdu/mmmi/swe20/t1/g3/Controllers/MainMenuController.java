@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 public class MainMenuController extends FXGLMenu {
     public MainMenuController(MenuType menuType) {
         super(menuType);
+
     }
 
     @Override
