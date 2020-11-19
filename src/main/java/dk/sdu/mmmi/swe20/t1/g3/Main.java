@@ -44,11 +44,17 @@ public class Main extends GameApplication {
         settings.setHeight(900);
         settings.setTitle("World of Fish");
 
-        settings.setMenuEnabled(true);
+        List<Language> langs = new ArrayList<>();
+        langs.add(Language.DANISH);
+        langs.add(Language.ENGLISH);
 
-        if(Utils.isIntelliJ()) {
-            settings.setDeveloperMenuEnabled(true);
-        }
+        settings.setSupportedLanguages(langs);
+
+        settings.setDeveloperMenuEnabled(true);
+        settings.setApplicationMode(ApplicationMode.DEVELOPER);
+
+        // https://github.com/AlmasB/FXGL/issues/898
+        settings.setDefaultLanguage(Language.DANISH);
 
         /*
         settings.setSceneFactory(new SceneFactory() {
