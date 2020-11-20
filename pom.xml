@@ -13,10 +13,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <source.version>14</source.version>
-        <fxgl.version>11.8</fxgl.version>
+        <fxgl.version>dev-SNAPSHOT</fxgl.version>
 
         <main.class>dk.sdu.mmmi.swe20.t1.g3.Main</main.class>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>oss.sonatype.org-snapshot</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>

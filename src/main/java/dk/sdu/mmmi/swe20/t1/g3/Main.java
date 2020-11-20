@@ -1,20 +1,19 @@
 package dk.sdu.mmmi.swe20.t1.g3;
 
+import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
-import com.almasb.fxgl.app.scene.SceneFactory;
-import dk.sdu.mmmi.swe20.t1.g3.Controllers.MainMenuController;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.localization.Language;
+import com.almasb.fxgl.dev.DevService;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Utils;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import java.util.*;
+import java.util.List;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameScene;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameWorld;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Main extends GameApplication {
     /*
@@ -44,11 +43,17 @@ public class Main extends GameApplication {
         settings.setHeight(900);
         settings.setTitle("World of Fish");
 
-        settings.setMenuEnabled(true);
+        List<Language> langs = new ArrayList<>();
+        langs.add(Language.DANISH);
+        langs.add(Language.ENGLISH);
 
-        if(Utils.isIntelliJ()) {
-            settings.setDeveloperMenuEnabled(true);
-        }
+        settings.setSupportedLanguages(langs);
+
+        settings.setDeveloperMenuEnabled(true);
+        settings.setApplicationMode(ApplicationMode.DEVELOPER);
+
+        // https://github.com/AlmasB/FXGL/issues/898
+        settings.setDefaultLanguage(Language.DANISH);
 
         /*
         settings.setSceneFactory(new SceneFactory() {
