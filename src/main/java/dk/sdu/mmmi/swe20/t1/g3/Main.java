@@ -3,10 +3,15 @@ package dk.sdu.mmmi.swe20.t1.g3;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.localization.Language;
 import com.almasb.fxgl.dev.DevService;
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.MainMenuController;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Utils;
+import dk.sdu.mmmi.swe20.t1.g3.gui.MainMenu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
@@ -49,25 +54,25 @@ public class Main extends GameApplication {
 
         settings.setSupportedLanguages(langs);
 
+        settings.setMainMenuEnabled(true);
+
         settings.setDeveloperMenuEnabled(true);
         settings.setApplicationMode(ApplicationMode.DEVELOPER);
 
         // https://github.com/AlmasB/FXGL/issues/898
         settings.setDefaultLanguage(Language.DANISH);
 
-        /*
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
-                return new MainMenuController(MenuType.MAIN_MENU);
+                return new MainMenu(MenuType.MAIN_MENU);
             }
         });
-         */
     }
 
     @Override
     protected void initGame() {
-        getGameScene().setBackgroundColor(Color.BLACK);
+        getGameScene().setBackgroundColor(Color.WHITE);
     }
 
     public static void main(String[] args) {
