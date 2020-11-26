@@ -3,10 +3,13 @@ package dk.sdu.mmmi.swe20.t1.g3;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.localization.Language;
-import com.almasb.fxgl.dev.DevService;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.Utils;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
@@ -16,26 +19,15 @@ import java.util.List;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Main extends GameApplication {
-    /*
-    public static void main(String[] args) {
-        // Load Scenes
-        Scenes.loadScenes();
+    private Game g = new Game("start");
+    private Scene currentScene;
 
-        // Convert
-        Scenes.convertStringsToScenes();
+    private final GameFactory gameFactory = new GameFactory();
+    private Entity player, item;
 
-        welcome();
-
-        Game g = new Game("start");
-        g.play();
-
+    public enum EntityType {
+        PLAYER, ITEM
     }
-
-    public static void welcome() {
-        System.out.println("");
-        System.out.println("🐟 Welcome to World of Fish");
-    }
-     */
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -62,15 +54,50 @@ public class Main extends GameApplication {
                 return new MainMenuController(MenuType.MAIN_MENU);
             }
         });
-         */
+        */
+    }
+
+    @Override
+    protected void initInput() {
+        onKey(KeyCode.W, "Gå op", () -> player.translateY(-5));
+        onKey(KeyCode.A, "Gå til venstre", () -> player.translateX(-5));
+        onKey(KeyCode.S, "Gå ned", () -> player.translateY( 5));
+        onKey(KeyCode.D, "Gå til højre", () -> player.translateX( 5));
     }
 
     @Override
     protected void initGame() {
         getGameScene().setBackgroundColor(Color.BLACK);
+        getGameWorld().addEntityFactory(gameFactory);
+
+        currentScene = Scenes.getSceneBySlug("start");
+
+        getGameScene().getViewport().setBounds(0,0, 1400, 900);
+        getGameScene().getViewport().setWidth(1400);
+        getGameScene().getViewport().setHeight(900);
+
+        player = spawn("player", getAppWidth() / 2 - 15, getAppHeight() / 2 - 15);
+        item = spawn("item", 400, 400);
+
+        //FXGL.setLevelFromMap("tmx/testigen-skov.tmx");
+        g.play();
+    }
+
+    @Override
+    protected void initUI() {
+        super.initUI();
+    }
+
+    protected void setLevel(String levelName) {
+        player.setAnchoredPosition(new Point2D(50, 50));
+        FXGL.setLevelFromMap("tmx/"+levelName+".tmx");
     }
 
     public static void main(String[] args) {
+
+        Scenes.loadScenes();
+        Scenes.convertStringsToScenes();
+
         launch(args);
     }
 }

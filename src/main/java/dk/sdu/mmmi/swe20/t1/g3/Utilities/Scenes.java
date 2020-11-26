@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class Scenes {
                 "Velkommen til World of Fish!",
                 Map.of(
                         "højre", "skov"
-                )
+                ),
+                new ArrayList<>(){},
+                "tmx/jb-32.tmx"
         );
         createScene(
                 "skov",
@@ -144,8 +147,8 @@ public class Scenes {
      *
      * Then options as an ArrayList. The ArrayList is formatted as [TaskSlug<String>...]
      */
-    static void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
-        scenes.add(new Scene(slug, name, description, exitsString, tasks));
+    static void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> items, String map) {
+        scenes.add(new Scene(slug, name, description, exitsString, items, map));
     }
 
     /*

@@ -1,0 +1,12 @@
+/ java
+    / dk.sdu.mmmi.swe20.t1.g3
+        / Controllers
+        / Models
+        / Objects
+        / SceneControllers
+        / Utilities
+        / Config
+        - Game.java
+        - GameFactory.java
+        - Main.java
+    / worldofzuul
