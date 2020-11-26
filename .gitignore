@@ -15,5 +15,8 @@ buildNumber.properties
 *.iml
 /out
 
+# Other Java
+*.log
+
 # Environment Variables
 .env
