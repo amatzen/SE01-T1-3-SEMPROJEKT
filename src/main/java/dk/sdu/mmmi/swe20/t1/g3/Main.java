@@ -1,5 +1,8 @@
 package dk.sdu.mmmi.swe20.t1.g3;
 
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes;
+
 public class Main {
     public static void main(String[] args) {
         // Load Scenes
