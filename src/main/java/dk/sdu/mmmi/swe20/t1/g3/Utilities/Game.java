@@ -9,6 +9,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import worldofzuul.Command;
 import worldofzuul.CommandWord;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,12 +95,18 @@ public class Game extends worldofzuul.Game {
     void printInventory() {
         InventoryController inventoryController = InventoryController.getInstance();
 
-        HashMap<Item, Scene> inventory = inventoryController.getInventory();
+        ArrayList<SceneItem> inventory = inventoryController.getInventory();
         System.out.println("Du har følgende i dit inventory:");
+        /*
         for (Map.Entry<Item, Scene> entry : inventory.entrySet()) {
             System.out.printf(entry.getKey().getName() + "    ");
         }
-        System.out.println("");
+         */
+
+        for ( SceneItem entry : inventory ) {
+            System.out.printf("%s   ", entry.getItem().getName());
+        }
+         System.out.println("");
     }
 
     void pickupItem(Command command) {

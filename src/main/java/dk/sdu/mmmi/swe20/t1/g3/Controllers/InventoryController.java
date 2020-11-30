@@ -3,6 +3,7 @@ package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,23 +20,23 @@ public class InventoryController {
 
     private InventoryController() {}
 
-    private HashMap<Item, Scene> inventory = new HashMap<>();
+    private ArrayList<SceneItem> inventory = new ArrayList<>();
 
     public void addToInventory(Item item, Scene scene) {
-        inventory.put(item, scene);
+        inventory.add(new SceneItem(scene, item));
     }
 
     public void dumpInventory() {
         inventory.clear();
     }
 
-    public HashMap<Item, Scene> getInventory() {
+    public ArrayList<SceneItem> getInventory() {
         return inventory;
     }
 
     public boolean containsOnlyTrash() {
-        for (Map.Entry<Item, Scene> entry: inventory.entrySet()) {
-            if(entry.getKey().getItemType() != ItemType.TRASH ) {
+        for (SceneItem entry: inventory) {
+            if(entry.getItem().getItemType() != ItemType.TRASH) {
                 return false;
             }
         }
@@ -44,8 +45,16 @@ public class InventoryController {
     }
 
     public boolean containsRoomItem(Scene scene, Item item) {
+        /*
         for(Map.Entry<Item, Scene> entry: inventory.entrySet()) {
             if(entry.getKey() == item && entry.getValue() == scene) {
+                return true;
+            }
+        }
+        */
+
+        for(SceneItem entry : inventory) {
+            if(entry.getItem() == item && entry.getScene() == scene) {
                 return true;
             }
         }
