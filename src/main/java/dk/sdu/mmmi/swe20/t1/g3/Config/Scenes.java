@@ -5,11 +5,15 @@ import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import java.util.ArrayList;
 import java.util.Map;
 
+// TODO: Omskriv directions til et nyt enum
+// TODO: JavaFX
+
 public enum Scenes {
     START(
             "start",
             "Starten",
             "Velkommen til Starten",
+            "01_START",
             Map.of(
                     "højre", "skov"
             )
@@ -19,6 +23,7 @@ public enum Scenes {
             "skov",
             "Skoven",
             "Velkommen til skoven",
+            "02_SKOV",
             Map.of(
                     "højre", "strand",
                     "venstre", "start"
@@ -29,6 +34,7 @@ public enum Scenes {
             "strand",
             "Stranden",
             "Velkommen til Stranden!",
+            "03_STRAND",
             Map.of(
                     "venstre", "skov",
                     "højre", "strandv2",
@@ -40,6 +46,7 @@ public enum Scenes {
             "strandv2",
             "Strandenv2",
             "Du befinder dig stadig på Stranden!",
+            "",
             Map.of(
                     "venstre", "strand",
                     "ned", "hav"
@@ -50,6 +57,7 @@ public enum Scenes {
             "hav",
             "Havet",
             "Velkommen til havet!",
+            "",
             Map.of(
                     "op", "strand",
                     "ned","havbund",
@@ -62,6 +70,7 @@ public enum Scenes {
             "havv2",
             "Havetv2",
             "Velkommen til havetv2!",
+            "",
             Map.of(
                     "op", "strandv2",
                     "venstre", "hav",
@@ -73,6 +82,7 @@ public enum Scenes {
             "havv3",
             "Havetv3",
             "Velkommen til havetv3!",
+            "",
             Map.of(
                     "op", "strand",
                     "højre", "hav",
@@ -83,6 +93,7 @@ public enum Scenes {
     HAVBUND("havbund",
             "Havbunden",
             "Velkommen til havbunden!",
+            "",
             Map.of(
                     "op", "hav",
                     "højre", "koralrev",
@@ -93,6 +104,7 @@ public enum Scenes {
     KORALREV("koralrev",
             "Koralrevet",
             "Velkommen til koralrevet!",
+            "",
             Map.of(
                     "op", "hav",
                     "venstre", "havbund"
@@ -103,6 +115,7 @@ public enum Scenes {
             "skibsvrag",
             "Skibsvraget",
             "Velkommen til skibsvraget!",
+            "",
             Map.of(
                     "op", "hav",
                     "højre", "havbund"
@@ -111,22 +124,44 @@ public enum Scenes {
 
 
 
-    private String slug, name, description;
+    private String slug, name, description, fxmlScene;
     private Map<String, String> exits;
-    private ArrayList<Item> items;
+    private ArrayList<String> items;
 
-    Scenes(String slug, String name, String description, Map<String, String> exits) {
+    Scenes(String slug, String name, String description, String fxmlScene, Map<String, String> exits) {
         this.slug = slug;
         this.name = name;
         this.description = description;
+        this.fxmlScene = fxmlScene;
         this.exits = exits;
     };
-    Scenes(String slug, String name, String description, Map<String, String> exits, ArrayList<Item> items) {
+    Scenes(String slug, String name, String description, String fxmlScene, Map<String, String> exits, ArrayList<String> items) {
         this.slug = slug;
         this.name = name;
         this.description = description;
+        this.fxmlScene = fxmlScene;
         this.exits = exits;
         this.items = items;
     };
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Map<String, String> getExitsString() {
+        return exits;
+    }
+
+    public ArrayList<String> getItems() {
+        return items;
+    }
 
 }

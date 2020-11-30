@@ -146,7 +146,7 @@ public class Scenes {
      * Then options as an ArrayList. The ArrayList is formatted as [TaskSlug<String>...]
      */
     static void createScene(String slug, String name, String description, Map<String, String> exitsString, ArrayList<String> tasks) {
-        scenes.add(new Scene(slug, name, description, exitsString, tasks));
+        scenes.add(new Scene(slug, name, description, exitsString));
     }
 
     /*
