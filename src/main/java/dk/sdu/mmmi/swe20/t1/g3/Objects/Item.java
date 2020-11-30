@@ -1,75 +1,55 @@
 package dk.sdu.mmmi.swe20.t1.g3.Objects;
 
-import java.util.ArrayList;
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
+
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-import static dk.sdu.mmmi.swe20.t1.g3.Utilities.Scenes.getSceneBySlug;
-
-class SceneLocation {
-    Long x;
-    Long y;
-
-    public SceneLocation(Long x, Long y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public Long getX() {
-        return x;
-    }
-
-    public Long getY() {
-        return y;
-    }
-}
-
 public class Item {
-    private static ArrayList<Item> items = new ArrayList<Item>();
+    private String slug, name, texture;
+    private ItemType itemType;
+    private HashMap<Scene, SceneLocation> spawns = new HashMap<Scene, SceneLocation>();
 
-    String slug;
-    String name;
-    String img;
-    HashMap<Scene, SceneLocation> spawns = new HashMap<Scene, SceneLocation>();
-    HashMap<String, SceneLocation> spawnsString = new HashMap<String, SceneLocation>();
-
-    public Item(String slug, String name, String img) {
+    public Item(String slug, String name, String texture, ItemType itemType, HashMap<String, SceneLocation> spawns) {
         this.slug = slug;
         this.name = name;
-        this.img = img;
+        this.texture = texture;
+        this.itemType = itemType;
 
-        Item.items.add(this);
-    }
-    public Item(String slug, String name, String img, HashMap<String, SceneLocation> locations) {
-        this.slug = slug;
-        this.name = name;
-        this.img = img;
+        SceneController sceneController = SceneController.getInstance();
 
-        Item.items.add(this);
+        this.spawns = new HashMap<Scene, SceneLocation>(
+            spawns.entrySet().stream()
+                .filter(s -> s.getKey() != null & s.getValue() != null)
+                .collect(Collectors.toMap(
+                        e->sceneController.getSceneBySlug(e.getKey()), e->e.getValue()
+                ))
+        );
     }
 
     public void setSpawns(HashMap<Scene, SceneLocation> spawns) {
         this.spawns = spawns;
     }
 
-    public String getImage() {
-        return img;
+    public HashMap<Scene, SceneLocation> getSpawns() {
+        return spawns;
     }
 
-    public static void convertStringsToItems () {
-        items.forEach(item -> {
-            HashMap<String, SceneLocation> data = item.spawnsString;
+    public String getTexture() {
+        return texture;
+    }
 
-            HashMap<Scene, SceneLocation> newSpawns = new HashMap<Scene, SceneLocation>(
-                    data.entrySet().stream()
-                            .filter(s -> s.getKey() != null & s.getValue() != null)
-                            .collect(
-                                    Collectors.toMap(e->getSceneBySlug(e.getKey()), e->e.getValue())
-                            )
-            );
+    public String getName() {
+        return name;
+    }
 
-            item.setSpawns(newSpawns);
+    public String getSlug() {
+        return slug;
+    }
 
-        });
+    public ItemType getItemType() {
+        return itemType;
     }
 }
