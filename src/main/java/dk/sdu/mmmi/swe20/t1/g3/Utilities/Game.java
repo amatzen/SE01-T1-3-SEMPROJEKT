@@ -66,6 +66,7 @@ public class Game extends worldofzuul.Game {
     public void play() {
         boolean finished = false;
 
+        // https://www.baeldung.com/java-asynchronous-programming
         ExecutorService threadpool = Executors.newCachedThreadPool();
         Future<Boolean> futureTask = threadpool.submit(() -> {
             Server server = Server.getInstance();
