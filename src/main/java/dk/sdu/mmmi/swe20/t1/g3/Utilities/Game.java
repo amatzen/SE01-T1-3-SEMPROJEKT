@@ -93,20 +93,7 @@ public class Game extends worldofzuul.Game {
     }
 
     void printInventory() {
-        InventoryController inventoryController = InventoryController.getInstance();
-
-        ArrayList<SceneItem> inventory = inventoryController.getInventory();
-        System.out.println("Du har følgende i dit inventory:");
-        /*
-        for (Map.Entry<Item, Scene> entry : inventory.entrySet()) {
-            System.out.printf(entry.getKey().getName() + "    ");
-        }
-         */
-
-        for ( SceneItem entry : inventory ) {
-            System.out.printf("%s   ", entry.getItem().getName());
-        }
-         System.out.println("");
+        InventoryController.getInstance().printInventory();
     }
 
     void pickupItem(Command command) {

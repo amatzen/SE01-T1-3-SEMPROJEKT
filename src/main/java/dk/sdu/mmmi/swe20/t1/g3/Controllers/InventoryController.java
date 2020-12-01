@@ -8,6 +8,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InventoryController {
     // Singleton Pattern Declaration
@@ -34,6 +35,19 @@ public class InventoryController {
         return inventory;
     }
 
+    public void printInventory() {
+        ArrayList<SceneItem> inventory = getInventory();
+        Map<String, Long> freqInventory = inventory.stream()
+                .collect(Collectors.groupingBy(e->e.getItem().getName(), Collectors.counting()));
+        System.out.println("Du har følgende i dit inventory:");
+
+        freqInventory.entrySet().forEach(e -> {
+            System.out.printf("%s   ", (e.getValue() > 1) ? e.getKey() + "×" + e.getValue() : e.getKey() );
+        });
+
+        System.out.println("");
+    }
+
     public boolean containsOnlyTrash() {
         for (SceneItem entry: inventory) {
             if(entry.getItem().getItemType() != ItemType.TRASH) {
@@ -45,13 +59,6 @@ public class InventoryController {
     }
 
     public boolean containsRoomItem(Scene scene, Item item) {
-        /*
-        for(Map.Entry<Item, Scene> entry: inventory.entrySet()) {
-            if(entry.getKey() == item && entry.getValue() == scene) {
-                return true;
-            }
-        }
-        */
 
         for(SceneItem entry : inventory) {
             if(entry.getItem() == item && entry.getScene() == scene) {
