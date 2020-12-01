@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
+import dk.sdu.mmmi.swe20.t1.g3.Communicator.Server;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
@@ -9,18 +10,25 @@ import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import worldofzuul.Command;
 import worldofzuul.CommandWord;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Game extends worldofzuul.Game {
     private SceneController sceneController = SceneController.getInstance();
+    private Parser parser;
 
     public Game(String startScene) {
-        this.parser = new Parser();
+        this.parser = new dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser();
 
         sceneController.goToScene(startScene);
         sceneController.getCurrentScene().displayScene();
+
     }
 
     protected boolean processCommand(Command command)
@@ -57,11 +65,47 @@ public class Game extends worldofzuul.Game {
     @Override
     public void play() {
         boolean finished = false;
+
+        ExecutorService threadpool = Executors.newCachedThreadPool();
+        Future<Boolean> futureTask = threadpool.submit(() -> {
+            Server server = Server.getInstance();
+            server.connect();
+
+            int msgNo = 0;
+            try {
+                Scanner input = new Scanner(server.getIn());
+                String message = input.nextLine();
+
+                while(message != "#CLOSE_CONNECTION") {
+                    msgNo++;
+
+                    switch (message.charAt(0)) {
+                        case '!':
+                            processCommand(parser.getCommandFromString(message.substring(1)));
+                            System.out.print("> ");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    message = input.nextLine();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                return true;
+            }
+
+        });
+
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing. Good bye.");
+        threadpool.shutdown();
     }
 
     @Override

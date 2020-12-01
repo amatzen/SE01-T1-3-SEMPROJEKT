@@ -7,6 +7,8 @@ public enum CommandWord
     HELP("help"),
     PICKUP("pickup"),
     INVENTORY("inventory"),
+    DUMP("dump"),
+    DROP("drop"),
     UNKNOWN("?");
     
     private String commandString;
