@@ -1,0 +1,17 @@
+.inventoryField {
+    -fx-fill: #000;
+    -fx-stroke-width: 0;
+
+    -fx-opacity: .5;
+}
+
+.inventoryField-active {
+    -fx-opacity: 1;
+    -fx-stroke: #fff;
+    -fx-stroke-width: 2px;
+}
+
+.inventoryField-filled {
+    -fx-opacity: 1;
+    -fx-stroke-width: 0;
+}
