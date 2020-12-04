@@ -2,15 +2,16 @@ package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import dk.sdu.mmmi.swe20.t1.g3.Services.Communicator;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InventoryController {
+
     // Singleton Pattern Declaration
     public static InventoryController instance = null;
     public static InventoryController getInstance() {
@@ -19,22 +20,54 @@ public class InventoryController {
     }
     // End Singleton Pattern Declaration
 
-    private InventoryController() {}
-
     private ArrayList<SceneItem> inventory = new ArrayList<>();
 
+    private InventoryController() { }
+
+    /**
+     * Add item to inventory
+     *
+     * @param item  the item
+     * @param scene the scene
+     */
     public void addToInventory(Item item, Scene scene) {
+
         inventory.add(new SceneItem(scene, item));
     }
 
+    /**
+     * Drop item from inventory
+     *
+     * @param item  the item
+     * @param scene the scene
+     */
+    public void dropItemFromInventory(Item item, Scene scene) {
+        SceneItem entry = inventory.stream().filter(x->{
+            return x.getItem().equals(item) && x.getScene().equals(scene);
+        }).findFirst().orElse(null);
+
+        if (entry != null) inventory.remove(entry);
+    }
+
+    /**
+     * Dump inventory.
+     */
     public void dumpInventory() {
         inventory.clear();
     }
 
+    /**
+     * Gets inventory.
+     *
+     * @return the inventory
+     */
     public ArrayList<SceneItem> getInventory() {
         return inventory;
     }
 
+    /**
+     * Print inventory.
+     */
     public void printInventory() {
         ArrayList<SceneItem> inventory = getInventory();
         Map<String, Long> freqInventory = inventory.stream()
@@ -48,9 +81,18 @@ public class InventoryController {
         System.out.println("");
     }
 
+    /**
+     * Contains only trash boolean.
+     *
+     * @return the boolean
+     */
     public boolean containsOnlyTrash() {
         for (SceneItem entry: inventory) {
-            if(entry.getItem().getItemType() != ItemType.TRASH) {
+            if(
+                entry.getItem().getItemType() != ItemType.TRASH &&
+                entry.getItem().getItemType() != ItemType.PLASTIC &&
+                entry.getItem().getItemType()  != ItemType.METAL
+            ) {
                 return false;
             }
         }
@@ -58,6 +100,13 @@ public class InventoryController {
         return true;
     }
 
+    /**
+     * Contains room item boolean.
+     *
+     * @param scene the scene
+     * @param item  the item
+     * @return the boolean
+     */
     public boolean containsRoomItem(Scene scene, Item item) {
 
         for(SceneItem entry : inventory) {
