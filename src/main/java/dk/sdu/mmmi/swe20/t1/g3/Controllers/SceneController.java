@@ -1,7 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 
 import dk.sdu.mmmi.swe20.t1.g3.Config.Scenes;
-import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 
 import java.util.ArrayList;
