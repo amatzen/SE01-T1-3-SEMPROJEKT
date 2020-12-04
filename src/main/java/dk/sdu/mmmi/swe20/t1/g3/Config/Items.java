@@ -11,7 +11,7 @@ public enum Items {
     SKRALD(
         "skrald",
         "Skrald",
-        "",
+        "Views/Items/SKRALD.png",
         ItemType.TRASH,
         Map.of(
             "start", new SceneLocation(40,50),
@@ -21,11 +21,20 @@ public enum Items {
     TANG(
         "tang",
         "Tang",
-        "",
-        ItemType.SEAWEED,
+        "Views/Items/TANG.png",
+        ItemType.BIO,
         Map.of(
             "strand", new SceneLocation(0,0)
         )
+    ),
+    PLASTIKFLASKE(
+            "plastikflaske",
+            "Plastikflaske",
+            "",
+            ItemType.PLASTIC,
+            Map.of(
+
+            )
     );
 
     private String slug, name, texture;
