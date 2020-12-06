@@ -6,9 +6,9 @@ public enum CommandWord
     QUIT("quit"),
     HELP("help"),
     PICKUP("pickup"),
+    DROP("drop"),
     INVENTORY("inventory"),
     DUMP("dump"),
-    DROP("drop"),
     UNKNOWN("?");
     
     private String commandString;
