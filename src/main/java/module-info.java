@@ -8,8 +8,10 @@ module SE01T13SEMPROJEKT {
 
     opens dk.sdu.mmmi.swe20.t1.g3.Views;
     opens dk.sdu.mmmi.swe20.t1.g3.Views.Partials;
+    opens dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
     exports dk.sdu.mmmi.swe20.t1.g3.Views;
+    exports dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
     exports dk.sdu.mmmi.swe20.t1.g3.Views.Partials;
     exports dk.sdu.mmmi.swe20.t1.g3;
     exports worldofzuul;
