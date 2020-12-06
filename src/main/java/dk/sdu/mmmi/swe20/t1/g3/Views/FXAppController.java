@@ -1,51 +1,69 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views;
 
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
-import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
+import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
 import io.github.techrobby.SimplePubSub.PubSub;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.ResourceBundle;
 
-public class FXAppController {
+public class FXAppController implements Initializable {
     SceneController sceneController = SceneController.getInstance();
     PubSub pubSub = PubSub.getInstance();
 
-    private String currentSceneName = "";
+    @FXML
+    AnchorPane AppWindow;
 
     @FXML
-    public AnchorPane GameWindow;
+    AnchorPane GameWindow;
 
     @FXML
-    public AnchorPane UI_Inventory;
+    AnchorPane UI_Inventory;
 
     @FXML
-    public Text UI_SceneLabel;
+    Text UI_SceneLabel;
 
-    @FXML
-    public void initialize() {
-        /*try {
-            FXMLLoader f = new FXMLLoader(getClass().getResource("partials/inventory.fxml"));
-            Node node = f.load();
-            UI_Inventory.getChildren().setAll(node);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }*/
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        pubSub.addListener("fx_sceneChanged", (type, object) -> {
-            String sceneSlug = (String) object;
-            Scene currentScene = sceneController.getSceneBySlug(sceneSlug);
-            setSceneLabel(currentScene.getName());
+        pubSub.addListener("fx_sceneChanged", (type, object) -> setSceneLabel(sceneController.getSceneBySlug((String) object).getName()));
+        setSceneLabel(sceneController.getCurrentScene().getName());
+
+        Player player = new Player(40, 50, 40, 70, Color.BLUE);
+
+        Platform.runLater(() -> {
+            AppWindow.getScene().setOnKeyPressed(e -> {
+                switch (e.getCode()) {
+                    case W, A, S, D -> player.handleKeyPress(e.getCode());
+
+                    case E -> {
+                        String whatToPickup = new FXUtils().prompt("Hvad skal jeg samle op?", "Skriv genstandens navn");
+                        if(whatToPickup.equals("")) return;
+                        pubSub.publish("executeCommand", "pickup " + whatToPickup);
+                    }
+                }
+            });
+
+            AppWindow.getScene().setOnKeyReleased(e -> {
+                switch (e.getCode()) {
+                    case W, A, S, D -> player.handleKeyRelease(e.getCode());
+                }
+            });
+
+            AppWindow.getChildren().add(player);
         });
-
-        currentSceneName = sceneController.getCurrentScene().getName();
-        setSceneLabel(currentSceneName);
 
     }
 
@@ -66,4 +84,10 @@ public class FXAppController {
             ioException.printStackTrace();
         }
     }
+
+    @FXML
+    public void exitApplication(ActionEvent event) {
+        Platform.exit();
+    }
+
 }

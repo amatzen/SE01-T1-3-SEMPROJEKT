@@ -36,7 +36,8 @@ public class InventoryViewController {
     @FXML
     GridPane InventoryGrid;
 
-    public InventoryViewController() {
+    @FXML
+    public void initialize() {
         pubSub.addListener("fx_inventoryChanged", (type, object) -> {
             updateInventory();
         });
