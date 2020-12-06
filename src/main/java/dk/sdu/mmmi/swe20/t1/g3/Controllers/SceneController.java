@@ -2,6 +2,7 @@ package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 
 import dk.sdu.mmmi.swe20.t1.g3.Config.Scenes;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import io.github.techrobby.SimplePubSub.PubSub;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class SceneController {
 
     private ArrayList<Scene> scenes = new ArrayList<>();
     private Scene currentScene;
+
+    private PubSub pubSub = PubSub.getInstance();
 
     private SceneController() {
         for(Scenes scene : Scenes.values()) {
@@ -63,6 +66,7 @@ public class SceneController {
             throw new Exception("Scene not found");
         }
 
+        pubSub.publish("fx_sceneChanged", scene.getSlug());
         currentScene = scene;
     }
 

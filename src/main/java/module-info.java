@@ -6,6 +6,7 @@ module SE01T13SEMPROJEKT {
     requires com.google.gson;
     requires java.desktop;
 
+    opens dk.sdu.mmmi.swe20.t1.g3.Views;
     opens dk.sdu.mmmi.swe20.t1.g3.Views.Partials;
 
     exports dk.sdu.mmmi.swe20.t1.g3.Views;

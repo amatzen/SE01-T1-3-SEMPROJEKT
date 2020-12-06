@@ -1,21 +1,35 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views;
 
-import dk.sdu.mmmi.swe20.t1.g3.Services.Communicator;
-import dk.sdu.mmmi.swe20.t1.g3.Types.Recipient;
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class FXAppController {
-    public FXAppController() {
+    SceneController sceneController = SceneController.getInstance();
+    PubSub pubSub = PubSub.getInstance();
+
+    private String currentSceneName = "";
+
+    @FXML
+    public AnchorPane GameWindow;
+
+    @FXML
+    public AnchorPane UI_Inventory;
+
+    @FXML
+    public Text UI_SceneLabel;
+
+    @FXML
+    public void initialize() {
         /*try {
             FXMLLoader f = new FXMLLoader(getClass().getResource("partials/inventory.fxml"));
             Node node = f.load();
@@ -24,13 +38,21 @@ public class FXAppController {
             ioException.printStackTrace();
         }*/
 
+        pubSub.addListener("fx_sceneChanged", (type, object) -> {
+            String sceneSlug = (String) object;
+            Scene currentScene = sceneController.getSceneBySlug(sceneSlug);
+            setSceneLabel(currentScene.getName());
+        });
+
+        currentSceneName = sceneController.getCurrentScene().getName();
+        setSceneLabel(currentSceneName);
+
     }
 
     @FXML
-    public AnchorPane GameWindow;
-
-    @FXML
-    public AnchorPane UI_Inventory;
+    private void setSceneLabel(String sceneName) {
+        UI_SceneLabel.setText(sceneName);
+    }
 
     @FXML
     public void setGameWindow(String scene) {
