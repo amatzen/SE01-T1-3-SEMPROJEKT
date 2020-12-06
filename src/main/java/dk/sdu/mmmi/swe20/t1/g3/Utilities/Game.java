@@ -5,9 +5,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
-import dk.sdu.mmmi.swe20.t1.g3.Services.Communicator;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
-import dk.sdu.mmmi.swe20.t1.g3.Types.Recipient;
 import worldofzuul.Command;
 import worldofzuul.CommandWord;
 
@@ -61,7 +59,7 @@ public class Game extends worldofzuul.Game {
     @Override
     public void play() {
         boolean finished = false;
-
+        /*
         // https://www.baeldung.com/java-asynchronous-programming
         ExecutorService threadpool = Executors.newCachedThreadPool();
         Future<Boolean> futureTask = threadpool.submit(() -> {
@@ -69,13 +67,14 @@ public class Game extends worldofzuul.Game {
             while ( true ) {
             }
         });
+        */
 
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing. Good bye.");
-        threadpool.shutdown();
+        //threadpool.shutdown();
     }
 
     @Override
