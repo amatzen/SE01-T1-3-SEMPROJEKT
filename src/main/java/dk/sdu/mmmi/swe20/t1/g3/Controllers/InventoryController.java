@@ -2,9 +2,9 @@ package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
-import dk.sdu.mmmi.swe20.t1.g3.Services.Communicator;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
+import io.github.techrobby.SimplePubSub.PubSub;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,6 +20,8 @@ public class InventoryController {
     }
     // End Singleton Pattern Declaration
 
+    PubSub pubSub = PubSub.getInstance();
+
     private ArrayList<SceneItem> inventory = new ArrayList<>();
 
     private InventoryController() { }
@@ -31,8 +33,8 @@ public class InventoryController {
      * @param scene the scene
      */
     public void addToInventory(Item item, Scene scene) {
-
         inventory.add(new SceneItem(scene, item));
+        pubSub.publish("fx_inventoryChanged", true);
     }
 
     /**
@@ -47,6 +49,7 @@ public class InventoryController {
         }).findFirst().orElse(null);
 
         if (entry != null) inventory.remove(entry);
+        pubSub.publish("fx_inventoryChanged", true);
     }
 
     /**
@@ -54,6 +57,7 @@ public class InventoryController {
      */
     public void dumpInventory() {
         inventory.clear();
+        pubSub.publish("fx_inventoryChanged", true);
     }
 
     /**

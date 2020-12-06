@@ -3,7 +3,9 @@ package dk.sdu.mmmi.swe20.t1.g3.Views.Partials;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Main;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
+import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -27,6 +29,7 @@ public class InventoryViewController {
 
     HashMap<Integer, Item> invLocation = new HashMap<>();
 
+    PubSub pubSub = PubSub.getInstance();
     InventoryController inventoryController = InventoryController.getInstance();
     HashMap<Item, Long> inventory = new HashMap<>();
 
@@ -34,6 +37,12 @@ public class InventoryViewController {
     GridPane InventoryGrid;
 
     public InventoryViewController() {
+        pubSub.addListener("fx_inventoryChanged", (type, object) -> {
+            updateInventory();
+        });
+        /*
+        Før PubSub:
+
         Thread updater = new Thread(() -> {
             while (true) {
                 updateInventory();
@@ -45,6 +54,7 @@ public class InventoryViewController {
             }
         });
         updater.start();
+        */
     }
 
     private void updateInventory() {
