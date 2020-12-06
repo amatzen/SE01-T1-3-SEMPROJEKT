@@ -6,20 +6,22 @@ import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
+import io.github.techrobby.SimplePubSub.PubSub;
 import worldofzuul.Command;
 import worldofzuul.CommandWord;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Game extends worldofzuul.Game {
     private final SceneController sceneController = SceneController.getInstance();
-    private Parser parser;
+    private final PubSub pubSub = PubSub.getInstance();
+
+    private final Parser parser = new dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser();
 
     public Game(String startScene) {
-        this.parser = new dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser();
-
         sceneController.goToScene(startScene);
         sceneController.getCurrentScene().displayScene();
 
@@ -32,25 +34,16 @@ public class Game extends worldofzuul.Game {
         CommandWord commandWord = command.getCommandWord();
 
         switch (commandWord) {
-            case UNKNOWN:
+            case UNKNOWN -> {
                 System.out.println("Denne kommando findes ikke. Mente du?");
                 parser.showCommands();
                 return false;
-            case GO:
-                goRoom(command);
-                break;
-            case PICKUP:
-                pickupItem(command);
-                break;
-            case INVENTORY:
-                printInventory();
-                break;
-            case HELP:
-                printHelp();
-                break;
-            case QUIT:
-                wantToQuit = quit(command);
-                break;
+            }
+            case GO -> goRoom(command);
+            case PICKUP -> pickupItem(command);
+            case INVENTORY -> printInventory();
+            case HELP -> printHelp();
+            case QUIT -> wantToQuit = quit(command);
         }
 
         return wantToQuit;
@@ -83,7 +76,7 @@ public class Game extends worldofzuul.Game {
     public void goRoom(Command command)
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Go where?");
+            System.out.println("Hvor vil du gå hen?");
             return;
         }
 
@@ -92,7 +85,7 @@ public class Game extends worldofzuul.Game {
         Scene nextScene = sceneController.getCurrentScene().getExit(direction);
 
         if (nextScene == null) {
-            System.out.println("There is no door!");
+            System.out.println("Ingen dør!");
         }
         else {
             try {
