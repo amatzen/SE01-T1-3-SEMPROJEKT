@@ -58,23 +58,25 @@ public class Game extends worldofzuul.Game {
 
     @Override
     public void play() {
-        boolean finished = false;
-        /*
+        AtomicBoolean finished = new AtomicBoolean(false);
+
         // https://www.baeldung.com/java-asynchronous-programming
         ExecutorService threadpool = Executors.newCachedThreadPool();
-        Future<Boolean> futureTask = threadpool.submit(() -> {
-            Communicator communicator = Communicator.getInstance();
-            while ( true ) {
-            }
+        Future futureTask = threadpool.submit(() -> {
+            pubSub.addListener("executeCommand", ((type, object) -> {
+                processCommand(parser.getCommandFromString((String) object));
+                System.out.print("> ");
+            }));
+            pubSub.addListener("exitApplication", ((type, object) -> {
+                threadpool.shutdownNow();
+            }));
         });
-        */
 
-        while (! finished) {
+        while (!finished.get()) {
             Command command = parser.getCommand();
-            finished = processCommand(command);
+            finished.set(processCommand(command));
         }
-        System.out.println("Thank you for playing. Good bye.");
-        //threadpool.shutdown();
+        System.out.println("Tak for spillet!");
     }
 
     @Override
