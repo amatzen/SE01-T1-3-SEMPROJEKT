@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO: Fix Inventory GUI
 // <!-- layoutX="483.0" layoutY="825.0" -->
 
 public class InventoryViewController {
@@ -81,6 +80,7 @@ public class InventoryViewController {
 
             try {
                 if ( !itemAlreadyInSlot ) {
+                    assert currentSlot != null;
                     currentSlot.getChildren().get(0).getStyleClass().add("inventoryField-filled");
 
                     InputStream is = Main.class.getResourceAsStream(key.getTexture());
@@ -90,6 +90,7 @@ public class InventoryViewController {
                     slotPlaceHolder.setFill(new ImagePattern(tileImg));
                 }
 
+                assert currentSlot != null;
                 StackPane slotAmountPane = (StackPane) currentSlot.getChildren().get(2);
                 Text slotAmountText = (Text) slotAmountPane.getChildren().get(1);
 

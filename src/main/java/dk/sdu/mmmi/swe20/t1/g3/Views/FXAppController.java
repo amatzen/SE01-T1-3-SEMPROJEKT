@@ -43,7 +43,12 @@ public class FXAppController implements Initializable {
         pubSub.addListener("fx_sceneChanged", (type, object) -> onSceneChange(object));
         setSceneLabel(sceneController.getCurrentScene().getName());
 
-        Player player = new Player(40, 50, 40, 70, Color.BLUE);
+        spawnPlayer();
+
+    }
+
+    private void spawnPlayer() {
+        Player player = new Player((1400/2) - 40/2, (840/2) - 70/2, 40, 70, Color.BLUE);
 
         Platform.runLater(() -> {
             AppWindow.getScene().setOnKeyPressed(e -> {
@@ -52,6 +57,8 @@ public class FXAppController implements Initializable {
                     case UP, LEFT, DOWN, RIGHT -> handleSceneKeyPress(e.getCode());
 
                     case E -> {
+                        player.stopMovement();
+
                         String whatToPickup = new FXUtils().prompt("Hvad skal jeg samle op?", "Skriv genstandens navn");
                         if(whatToPickup.equals("")) return;
                         pubSub.publish("executeCommand", "pickup " + whatToPickup);
@@ -65,9 +72,8 @@ public class FXAppController implements Initializable {
                 }
             });
 
-            AppWindow.getChildren().add(player);
+            AppWindow.getChildren().add(1,player);
         });
-
     }
 
     private void onSceneChange() {

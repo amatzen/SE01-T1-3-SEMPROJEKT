@@ -2,8 +2,12 @@ package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,13 +44,46 @@ public class Player extends Sprite {
 
                 setX(getX() + dx);
                 setY(getY() + dy);
+
             }
         };
         timer.start();
+
+        this.addEventHandler(KeyEvent.KEY_PRESSED, (keyEvent) -> {
+            /*Polygon bounds = new Polygon();
+            bounds.getPoints().addAll(new Double[] {
+                0.0,
+            });*/
+
+            var l_OK = this.getBoundsInParent().intersects(0,0,2,900);
+            var r_OK = this.getBoundsInParent().intersects(1399,0,2,900);
+
+            var t_OK = this.getBoundsInParent().intersects(0,0,1400,1);
+            var b_OK = this.getBoundsInParent().intersects(0,899,1400,1);
+
+            if(
+                l_OK || r_OK || t_OK || b_OK
+            ) {
+                System.out.println("t");
+            }
+        });
+
+    }
+
+    private void handleCollision() {
+        if(!this.getBoundsInParent().intersects(0,0,1400,900)) {
+            System.out.println("oh no");
+        }
     }
 
     private boolean getAnimation(String s) {
         return animations.get(s);
+    }
+
+    public void stopMovement() {
+        for (KeyCode keyCode: new KeyCode[]{KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D}) {
+            handleKeyRelease(keyCode);
+        }
     }
 
     public void handleKeyPress(KeyCode keyCode) {
@@ -66,5 +103,24 @@ public class Player extends Sprite {
             case D -> animations.put("d", false);
         }
     }
+
+    /*
+    private boolean checkShapeIntersection(Shape shape) {
+        boolean collisionDetected = false;
+        for (Shape static_bloc : nodes) {
+            if (static_bloc != shape) {
+                static_bloc.setFill(Color.GREEN);
+
+                Shape intersect = Shape.intersect(shape, static_bloc);
+                if (intersect.getBoundsInLocal().getWidth() != -1) {
+                    collisionDetected = true;
+                }
+            }
+        }
+
+        return collisionDetected;
+    }
+
+     */
 
 }
