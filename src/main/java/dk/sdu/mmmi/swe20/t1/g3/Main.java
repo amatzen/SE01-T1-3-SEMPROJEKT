@@ -1,81 +1,59 @@
 package dk.sdu.mmmi.swe20.t1.g3;
 
-import com.almasb.fxgl.app.ApplicationMode;
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
-import com.almasb.fxgl.app.scene.SceneFactory;
-import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.localization.Language;
-import com.almasb.fxgl.dev.DevService;
-import dk.sdu.mmmi.swe20.t1.g3.Controllers.MainMenuController;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.Utils;
-import dk.sdu.mmmi.swe20.t1.g3.gui.MainMenu;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
+import io.github.techrobby.SimplePubSub.PubSub;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-import java.util.*;
-import java.util.List;
+import java.util.Optional;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
-
-public class Main extends GameApplication {
-    /*
-    public static void main(String[] args) {
-        // Load Scenes
-        Scenes.loadScenes();
-
-        // Convert
-        Scenes.convertStringsToScenes();
-
-        welcome();
-
-        Game g = new Game("start");
-        g.play();
-
-    }
-
-    public static void welcome() {
-        System.out.println("");
-        System.out.println("🐟 Welcome to World of Fish");
-    }
-     */
-
-    @Override
-    protected void initSettings(GameSettings settings) {
-        settings.setWidth(1400);
-        settings.setHeight(900);
-        settings.setTitle("World of Fish");
-
-        List<Language> langs = new ArrayList<>();
-        langs.add(Language.DANISH);
-        langs.add(Language.ENGLISH);
-
-        settings.setSupportedLanguages(langs);
-
-        settings.setMainMenuEnabled(true);
-
-        settings.setDeveloperMenuEnabled(true);
-        settings.setApplicationMode(ApplicationMode.DEVELOPER);
-
-        // https://github.com/AlmasB/FXGL/issues/898
-        settings.setDefaultLanguage(Language.DANISH);
-
-        settings.setSceneFactory(new SceneFactory() {
-            @Override
-            public FXGLMenu newMainMenu() {
-                return new MainMenu(MenuType.MAIN_MENU);
-            }
-        });
-    }
-
-    @Override
-    protected void initGame() {
-        getGameScene().setBackgroundColor(Color.WHITE);
-    }
+public class Main extends Application {
+    private PubSub pubSub = PubSub.getInstance();
+    Game g = new Game("start");
+    Thread gameThread = new Thread(g::play);
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        gameThread.setDaemon(true);
+        gameThread.start();
+
+        stage.setTitle("World of Fish");
+        stage.setWidth(1400);
+        stage.setHeight(900);
+        stage.setResizable(false);
+
+        Parent root = FXMLLoader.load(getClass().getResource("Views/Application.fxml"));
+        Scene scene = new Scene(root);
+
+        scene.getStylesheets().add(getClass().getResource("Views/Assets/main.css").toString());
+
+        stage.setScene(scene);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                stop();
+                Platform.exit();
+            }
+        });
+        stage.show();
+    }
+
+    @Override
+    public void stop(){
+        pubSub.publish("exitApplication", true);
+        gameThread.interrupt();
+        System.exit(0);
     }
 }

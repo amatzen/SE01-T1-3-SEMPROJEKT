@@ -5,6 +5,10 @@ public enum CommandWord
     GO("go"),
     QUIT("quit"),
     HELP("help"),
+    PICKUP("pickup"),
+    DROP("drop"),
+    INVENTORY("inventory"),
+    DUMP("dump"),
     UNKNOWN("?");
     
     private String commandString;

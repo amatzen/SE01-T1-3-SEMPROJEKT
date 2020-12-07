@@ -15,9 +15,7 @@ buildNumber.properties
 *.iml
 /out
 
-# FXGL
-logs/
-system/
+# Other Java
 *.log
 
 # Environment Variables

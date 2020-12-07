@@ -5,8 +5,8 @@ import java.util.StringTokenizer;
 
 public class Parser 
 {
-    private CommandWords commands;
-    private Scanner reader;
+    protected CommandWords commands;
+    protected Scanner reader;
 
     public Parser() 
     {
