@@ -36,8 +36,8 @@ public enum Scenes {
             "03_STRAND",
             Map.of(
                     LEFT, "skov",
-                    RIGHT, "strandv2",
-                    DOWN, "hav"
+                    RIGHT, "hav",
+                    DOWN, "strandv2"
             )
     ),
 
@@ -47,8 +47,8 @@ public enum Scenes {
             "Du befinder dig stadig på Stranden!",
             "",
             Map.of(
-                    LEFT, "strand",
-                    DOWN, "hav"
+                    LEFT, "hav",
+                    UP, "strand"
             )
     ),
 
@@ -60,8 +60,8 @@ public enum Scenes {
             Map.of(
                     UP, "strand",
                     DOWN,"havbund",
-                    RIGHT, "havv2",
-                    LEFT, "havv3"
+                    RIGHT, "havv3",
+                    LEFT, "havv2"
             )
     ),
 
@@ -72,7 +72,7 @@ public enum Scenes {
             "",
             Map.of(
                     UP, "strandv2",
-                    LEFT, "hav",
+                    RIGHT, "hav",
                     DOWN, "koralrev"
             )
     ),
@@ -84,7 +84,7 @@ public enum Scenes {
             "",
             Map.of(
                     UP, "strand",
-                    RIGHT, "hav",
+                    LEFT, "hav",
                     DOWN, "skibsvrag"
             )
     ),
@@ -95,8 +95,8 @@ public enum Scenes {
             "",
             Map.of(
                     UP, "hav",
-                    RIGHT, "koralrev",
-                    LEFT,"skibsvrag"
+                    LEFT, "koralrev",
+                    RIGHT,"skibsvrag"
             )
     ),
 
@@ -105,8 +105,8 @@ public enum Scenes {
             "Velkommen til koralrevet!",
             "",
             Map.of(
-                    UP, "hav",
-                    LEFT, "havbund"
+                    UP, "havv2",
+                    RIGHT, "havbund"
             )
     ),
 
@@ -117,7 +117,7 @@ public enum Scenes {
             "",
             Map.of(
                     UP, "hav",
-                    RIGHT, "havbund"
+                    LEFT, "havbund"
             )
     );
 

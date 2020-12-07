@@ -15,7 +15,7 @@ public enum Items {
         ItemType.TRASH,
         Map.of(
             "start", new SceneLocation(40,50),
-            "havbund", new SceneLocation(0,0)
+            "skov", new SceneLocation(0,0)
         )
     ),
     TANG(
@@ -24,7 +24,9 @@ public enum Items {
         "Views/Items/TANG.png",
         ItemType.BIO,
         Map.of(
-            "strand", new SceneLocation(0,0)
+            "strand", new SceneLocation(0,0),
+            "hav", new SceneLocation(0, 0),
+            "skibsvrag", new SceneLocation(0, 0)
         )
     ),
     PLASTIKFLASKE(
@@ -33,7 +35,18 @@ public enum Items {
             "",
             ItemType.PLASTIC,
             Map.of(
-
+                    "skov", new SceneLocation(0, 0),
+                    "havbund", new SceneLocation(0, 0)
+            )
+    ),
+    PLASTBUNKE(
+            "plastbunke",
+            "Bunke af plastik",
+            "",
+            ItemType.PLASTIC,
+            Map.of(
+                    "hav", new SceneLocation(0, 0),
+                    "koralrev", new SceneLocation(0, 0)
             )
     );
 
