@@ -3,6 +3,7 @@ package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 import dk.sdu.mmmi.swe20.t1.g3.Config.Items;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 
 import java.util.ArrayList;
@@ -21,14 +22,18 @@ public class ItemController {
 
     private ItemController() {
         for (Items item: Items.values()) {
-            items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns()));
+            if(item.getItemAction() == ItemAction.INTERACTABLE) {
+                items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
+            } else {
+                items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
+            }
         }
     }
 
-    // TODO: Omskriv til JavaFX
     public ArrayList<Item> getItemsByScene(String slug) {
         return getItemsByScene(SceneController.getInstance().getSceneBySlug(slug));
     }
+
     public ArrayList<Item> getItemsByScene(Scene scene) {
         ArrayList<Item> itemsInScene = new ArrayList<Item>();
 

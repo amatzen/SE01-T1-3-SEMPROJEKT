@@ -4,5 +4,7 @@ public enum ItemType {
     TRASH,
     PLASTIC,
     METAL,
-    BIO
+    BIO,
+
+    INTERACTABLE
 }

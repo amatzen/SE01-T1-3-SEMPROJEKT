@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Config;
 
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import javafx.scene.shape.Box;
@@ -8,26 +9,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Items {
+    // Pickupables
     SKRALD(
-        "skrald",
-        "Skrald",
-        "Views/Items/SKRALD.png",
-        ItemType.TRASH,
-        Map.of(
-            "start", new SceneLocation(40,50),
-            "skov", new SceneLocation(0,0)
-        )
+            "skrald",
+            "Skrald",
+            "Views/Items/SKRALD.png",
+            ItemType.TRASH,
+            Map.of(
+                "start", new SceneLocation(430,560),
+                "skov", new SceneLocation(0,0)
+            ),
+            ItemAction.PICKUPABLE
     ),
     TANG(
-        "tang",
-        "Tang",
-        "Views/Items/TANG.png",
-        ItemType.BIO,
-        Map.of(
-            "strand", new SceneLocation(0,0),
-            "hav", new SceneLocation(0, 0),
-            "skibsvrag", new SceneLocation(0, 0)
-        )
+            "tang",
+            "Tang",
+            "Views/Items/TANG.png",
+            ItemType.BIO,
+            Map.of(
+                "strand", new SceneLocation(0,0),
+                "hav", new SceneLocation(0, 0),
+                "skibsvrag", new SceneLocation(0, 0)
+            ),
+            ItemAction.PICKUPABLE
     ),
     PLASTIKFLASKE(
             "plastikflaske",
@@ -37,28 +41,57 @@ public enum Items {
             Map.of(
                     "skov", new SceneLocation(0, 0),
                     "havbund", new SceneLocation(0, 0)
-            )
+            ),
+            ItemAction.PICKUPABLE
     ),
     PLASTBUNKE(
             "plastbunke",
-            "Bunke af plastik",
+            "Plastbunke",
             "",
             ItemType.PLASTIC,
             Map.of(
                     "hav", new SceneLocation(0, 0),
                     "koralrev", new SceneLocation(0, 0)
-            )
+            ),
+            ItemAction.PICKUPABLE
+    ),
+
+    // Interactables
+    SKRALDESPAND(
+            "skraldespand",
+            "Skraldespand",
+            "",
+            ItemType.INTERACTABLE,
+            Map.of(
+
+            ),
+            ItemAction.INTERACTABLE,
+            () -> {
+                System.out.println("Test");
+            }
     );
 
     private String slug, name, texture;
     private ItemType itemType;
     private HashMap<String, SceneLocation> spawns;
-    Items(String slug, String name, String texture, ItemType itemType, Map<String, SceneLocation> spawns) {
+    private ItemAction itemAction;
+    private Runnable runnable;
+    Items(String slug, String name, String texture, ItemType itemType, Map<String, SceneLocation> spawns, ItemAction itemAction) {
         this.slug = slug;
         this.name = name;
         this.texture = texture;
         this.itemType = itemType;
         this.spawns = new HashMap<String, SceneLocation>( spawns );
+        this.itemAction = itemAction;
+    }
+    Items(String slug, String name, String texture, ItemType itemType, Map<String, SceneLocation> spawns, ItemAction itemAction, Runnable runnable) {
+        this.slug = slug;
+        this.name = name;
+        this.texture = texture;
+        this.itemType = itemType;
+        this.spawns = new HashMap<String, SceneLocation>( spawns );
+        this.itemAction = itemAction;
+        this.runnable = runnable;
     }
 
     public String getSlug() {
@@ -79,5 +112,9 @@ public enum Items {
 
     public HashMap<String, SceneLocation> getSpawns() {
         return spawns;
+    }
+
+    public ItemAction getItemAction() {
+        return itemAction;
     }
 }
