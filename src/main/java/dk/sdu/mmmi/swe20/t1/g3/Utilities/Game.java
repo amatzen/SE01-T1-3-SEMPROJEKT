@@ -86,6 +86,7 @@ public class Game extends worldofzuul.Game {
 
         if (nextScene == null) {
             System.out.println("Ingen dør!");
+            pubSub.publish("fx_notify", "Ingen dør#Ingen dør fundet!");
         }
         else {
             try {
@@ -125,6 +126,7 @@ public class Game extends worldofzuul.Game {
             System.out.println(feedbackMessage);
         } else {
             System.out.println("Kunne ikke samle tingen op, vil du prøve igen?");
+            pubSub.publish("fx_notify", "Kunne ikke samle tingen op#Test!");
         }
 
     }
