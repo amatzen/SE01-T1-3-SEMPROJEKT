@@ -2,7 +2,7 @@ module SE01T13SEMPROJEKT {
     requires javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
-    requires io.reactivex.rxjava3;
+    requires org.controlsfx.controls;
     requires com.google.gson;
     requires java.desktop;
 
