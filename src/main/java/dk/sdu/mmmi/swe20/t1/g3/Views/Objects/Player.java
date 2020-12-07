@@ -19,8 +19,13 @@ public class Player extends Sprite {
     private final double DEFAULT_MOVEMENT_FACTOR = 5;
     private final double DEFAULT_MOVEMENT_FACTOR_MODIFIER = 0.85;
 
+    private double centerX, centerY = 0;
+
     public Player(int x, int y, int w, int h, Color color) {
         super(x, y, w, h, "player", color);
+
+        centerX = getBoundsInParent().getCenterX();
+        centerY = getBoundsInParent().getCenterY();
 
         animations.put("w", false);
         animations.put("a", false);
@@ -37,36 +42,28 @@ public class Player extends Sprite {
                     MOVEMENT_FACTOR *= DEFAULT_MOVEMENT_FACTOR_MODIFIER;
                 }
 
-                if (getAnimation("w")) dy -= MOVEMENT_FACTOR;
-                if (getAnimation("s")) dy += MOVEMENT_FACTOR;
-                if (getAnimation("a")) dx -= MOVEMENT_FACTOR;
-                if (getAnimation("d")) dx += MOVEMENT_FACTOR;
+                boolean
+                    okUp, okDown, okLeft, okRight;
+
+                okUp    = centerY - height/2  >= 0;
+                okDown  = centerY + height  <= 900;
+
+                okLeft  = centerX - width/2   >= 0;
+                okRight = centerX + width  <= 1400;
+
+                if (getAnimation("w") && okUp   ) dy -= MOVEMENT_FACTOR;
+                if (getAnimation("s") && okDown ) dy += MOVEMENT_FACTOR;
+                if (getAnimation("a") && okLeft ) dx -= MOVEMENT_FACTOR;
+                if (getAnimation("d") && okRight) dx += MOVEMENT_FACTOR;
 
                 setX(getX() + dx);
                 setY(getY() + dy);
 
+                centerX = getBoundsInParent().getCenterX();
+                centerY = getBoundsInParent().getCenterY();
             }
         };
         timer.start();
-
-        this.addEventHandler(KeyEvent.KEY_PRESSED, (keyEvent) -> {
-            /*Polygon bounds = new Polygon();
-            bounds.getPoints().addAll(new Double[] {
-                0.0,
-            });*/
-
-            var l_OK = this.getBoundsInParent().intersects(0,0,2,900);
-            var r_OK = this.getBoundsInParent().intersects(1399,0,2,900);
-
-            var t_OK = this.getBoundsInParent().intersects(0,0,1400,1);
-            var b_OK = this.getBoundsInParent().intersects(0,899,1400,1);
-
-            if(
-                l_OK || r_OK || t_OK || b_OK
-            ) {
-                System.out.println("t");
-            }
-        });
 
     }
 

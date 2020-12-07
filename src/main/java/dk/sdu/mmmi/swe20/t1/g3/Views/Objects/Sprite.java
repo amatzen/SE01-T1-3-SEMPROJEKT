@@ -7,33 +7,16 @@ public class Sprite extends Rectangle {
     boolean dead = false;
     final String type;
 
+    public final double width, height;
+
     Sprite(int x, int y, int w, int h, String type, Color color) {
         super(w, h, color);
+
+        this.width = w;
+        this.height = h;
 
         this.type = type;
         setTranslateX(x);
         setTranslateY(y);
     }
-
-    private void moveX(double v) {
-        setTranslateX(getTranslateX() + v);
-    }
-    private void moveY(double v) {
-        setTranslateY(getTranslateY() + v);
-    }
-
-    public void moveLeft() {
-        moveX(-5);
-    }
-
-    public void moveRight() { moveX(5); }
-
-    public void moveUp() {
-        moveY(-5);
-    }
-
-    public void moveDown() {
-        moveY(5);
-    }
-    
 }
