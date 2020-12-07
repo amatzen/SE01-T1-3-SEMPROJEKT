@@ -1,28 +1,38 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views;
 
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
+import dk.sdu.mmmi.swe20.t1.g3.Main;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FXAppController implements Initializable {
     SceneController sceneController = SceneController.getInstance();
+    ItemController itemController = ItemController.getInstance();
     PubSub pubSub = PubSub.getInstance();
 
     @FXML
@@ -41,8 +51,24 @@ public class FXAppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         pubSub.addListener("fx_sceneChanged", (type, object) -> onSceneChange(object));
-        setSceneLabel(sceneController.getCurrentScene().getName());
+        pubSub.addListener("fx_notify", (type, object) -> {
+            String raw = (String) object;
+            String[] formatted = raw.split("#");
 
+            //new FXUtils().emitNotify(formatted[0], formatted[1], 10);
+
+            Platform.runLater(() -> {
+                Notifications.create()
+                        .darkStyle()
+                        .title(formatted[0])
+                        .text(formatted[1])
+                        .hideAfter(Duration.seconds(5))
+                        .show();
+            });
+        });
+
+        setSceneLabel(sceneController.getCurrentScene().getName());
+        spawnItems(sceneController.getCurrentScene());
         spawnPlayer();
 
     }
@@ -80,9 +106,11 @@ public class FXAppController implements Initializable {
         onSceneChange(null);
     }
     private void onSceneChange(Object payload) {
-        setSceneLabel(sceneController.getSceneBySlug((String) payload).getName());
+        Scene s = sceneController.getSceneBySlug((String) payload);
 
-        // TODO: Lav ItemSpawner, evt. i Views/ItemFactory
+        setSceneLabel(s.getName());
+        spawnItems(s);
+
     }
 
     private void handleSceneKeyPress(KeyCode keyCode) {
@@ -92,11 +120,36 @@ public class FXAppController implements Initializable {
             case DOWN -> pubSub.publish("executeCommand", "go ned");
             case RIGHT -> pubSub.publish("executeCommand", "go højre");
         }
+
     }
 
     @FXML
     private void setSceneLabel(String sceneName) {
         UI_SceneLabel.setText(sceneName);
+    }
+
+    private void spawnItems(Scene s) {
+        Platform.runLater(() -> {
+            ArrayList<Item> i = itemController.getItemsByScene(s);
+            for (Item item : i) {
+                SceneLocation pos = item.getSpawns().get(s);
+                if(pos.getX() == 0 && pos.getY() == 0) continue;
+
+                Rectangle box = new Rectangle();
+                box.setX(pos.getX());
+                box.setY(pos.getY());
+
+                box.setWidth(120);
+                box.setHeight(120);
+
+                InputStream is = Main.class.getResourceAsStream(item.getTexture());
+                Image img = new Image(is);
+
+                box.setFill(new ImagePattern(img));
+
+                GameWindow.getChildren().add(box);
+            }
+        });
     }
 
     @FXML
@@ -111,10 +164,4 @@ public class FXAppController implements Initializable {
             ioException.printStackTrace();
         }
     }
-
-    @FXML
-    public void exitApplication(ActionEvent event) {
-        Platform.exit();
-    }
-
 }
