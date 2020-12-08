@@ -9,7 +9,7 @@
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="AppWindow">
     <children>
-        <AnchorPane fx:id="GameWindow" prefHeight="900.0" prefWidth="1400.0" style="-fx-background-color: #ff0000;"
+        <AnchorPane fx:id="GameWindow" prefHeight="900.0" prefWidth="1400.0" styleClass="gameWindow" style="-fx-background-color: #ff0000;"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="0.0"/>
         <fx:include

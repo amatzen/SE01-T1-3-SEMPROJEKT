@@ -10,12 +10,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.util.Optional;
 
 public class Main extends Application {
+
     private PubSub pubSub = PubSub.getInstance();
     Game g = new Game("start");
     Thread gameThread = new Thread(g::play);
