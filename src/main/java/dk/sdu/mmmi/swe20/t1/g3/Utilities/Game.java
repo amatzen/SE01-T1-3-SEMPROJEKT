@@ -156,7 +156,16 @@ public class Game extends worldofzuul.Game {
                     :
                     "Er du sikker på, at " + item.getName() + " skal tilbage i naturen? " + item.getName() + " ligger nu i naturen igen";
             System.out.println(feedbackMessage);
-
+        }
+        else {
+            Item item = itemController.getItemBySlug(itemSlug);
+            String feedbackMessage = item.getItemType() != ItemType.BIO ?
+                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..? I hvert fald kan " + item.getName() +
+                    " kun droppes i rummet du fandt " + item.getName() + " find rummet og prøv igen!"
+                    :
+                    "God ide at putte " + item.getName() + " tilbage i naturen, men for at putte " + item.getName() +
+                    " tilbae i naturen, skal du lægge det i rummet hvor du fandt det. Tak!!";
+            System.out.println(feedbackMessage);
         }
     }
 
