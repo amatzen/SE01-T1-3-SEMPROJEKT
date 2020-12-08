@@ -9,6 +9,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
+import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerActionIdenticator;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -50,6 +51,7 @@ public class FXAppController implements Initializable {
     Text UI_SceneLabel;
 
     ArrayList<Rectangle> itemsSpawned = new ArrayList<>();
+    PlayerActionIdenticator pai = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,26 +61,24 @@ public class FXAppController implements Initializable {
             String raw = (String) object;
             String[] formatted = raw.split("#");
 
-            //new FXUtils().emitNotify(formatted[0], formatted[1], 10);
-
             Platform.runLater(() -> {
                 Notifications.create()
-                        .darkStyle()
-                        .title(formatted[0])
-                        .text(formatted[1])
-                        .hideAfter(Duration.seconds(5))
-                        .show();
+                    .darkStyle()
+                    .title(formatted[0])
+                    .text(formatted[1])
+                    .hideAfter(Duration.seconds(5))
+                    .show();
             });
         });
 
         setSceneLabel(sceneController.getCurrentScene().getName());
         spawnItems(sceneController.getCurrentScene());
         spawnPlayer();
-
     }
 
     private void spawnPlayer() {
         Player player = new Player((1400/2) - 40/2, (840/2) - 70/2, 40, 70, Color.BLUE);
+        pai = new PlayerActionIdenticator(player);
 
         Platform.runLater(() -> {
             AppWindow.getScene().setOnKeyPressed(e -> {
@@ -102,13 +102,13 @@ public class FXAppController implements Initializable {
                 }
             });
 
+            pai.hide();
+
             AppWindow.getChildren().add(1,player);
+            AppWindow.getChildren().add(2,pai.getView());
         });
     }
 
-    private void onSceneChange() {
-        onSceneChange(null);
-    }
     private void onSceneChange(Object payload) {
         Scene s = sceneController.getSceneBySlug((String) payload);
 
@@ -139,6 +139,10 @@ public class FXAppController implements Initializable {
                 GameWindow.getChildren().remove(i);
             }
         });
+    }
+
+    public PlayerActionIdenticator getPlayerActionIdenticator() {
+        return pai;
     }
 
     private void spawnItems(Scene s) {
