@@ -1,3 +1,4 @@
+/*
 package dk.sdu.mmmi.swe20.t1.g3.gui;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
@@ -137,6 +138,7 @@ public class MainMenu extends FXGLMenu {
         }
     }
 }
+ */
 
 
 

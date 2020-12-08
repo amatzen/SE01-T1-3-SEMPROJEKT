@@ -1,7 +1,6 @@
+/*
 package dk.sdu.mmmi.swe20.t1.g3.Controllers;
 
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -45,3 +44,5 @@ public class MainMenuController extends FXGLMenu {
         return new Text(version);
     }
 }
+
+ */

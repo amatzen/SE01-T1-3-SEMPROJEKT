@@ -67,12 +67,6 @@ public class Player extends Sprite {
 
     }
 
-    private void handleCollision() {
-        if(!this.getBoundsInParent().intersects(0,0,1400,900)) {
-            System.out.println("oh no");
-        }
-    }
-
     private boolean getAnimation(String s) {
         return animations.get(s);
     }
