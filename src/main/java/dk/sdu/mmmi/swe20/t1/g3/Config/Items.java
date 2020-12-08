@@ -17,7 +17,7 @@ public enum Items {
             ItemType.TRASH,
             Map.of(
                 "start", new SceneLocation(430,560),
-                "skov", new SceneLocation(0,0)
+                "skov", new SceneLocation(800,500)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -27,8 +27,8 @@ public enum Items {
             "Views/Items/TANG.png",
             ItemType.BIO,
             Map.of(
-                "strand", new SceneLocation(0,0),
-                "hav", new SceneLocation(0, 0),
+                "strand", new SceneLocation(500,300),
+                "hav", new SceneLocation(1100, 50),
                 "skibsvrag", new SceneLocation(0, 0)
             ),
             ItemAction.PICKUPABLE

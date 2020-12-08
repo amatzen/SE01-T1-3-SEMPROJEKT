@@ -10,10 +10,12 @@ import io.github.techrobby.SimplePubSub.PubSub;
 import worldofzuul.Command;
 import worldofzuul.CommandWord;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class Game extends worldofzuul.Game {
     private final SceneController sceneController = SceneController.getInstance();
@@ -111,12 +113,15 @@ public class Game extends worldofzuul.Game {
         }
 
         ItemController itemController = ItemController.getInstance();
+        InventoryController inventoryController = InventoryController.getInstance();
 
         Scene currentScene = sceneController.getCurrentScene();
         String itemSlug = command.getSecondWord();
 
-        if(itemController.hasItem(currentScene, itemSlug) && itemController.getItemBySlug(itemSlug) != null) {
-            InventoryController inventoryController = InventoryController.getInstance();
+        ArrayList<Item> items = itemController.getItemsByScene(sceneController.getCurrentScene());
+        ArrayList<Item> itemsNotPickedUp = new ArrayList<Item>(items.stream().filter(x -> !inventoryController.containsRoomItem(sceneController.getCurrentScene(), x)).collect(Collectors.toList()));
+
+        if(itemController.hasItem(currentScene, itemSlug) && itemsNotPickedUp.contains(itemController.getItemBySlug(itemSlug))) {
             Item item = itemController.getItemBySlug(itemSlug);
             inventoryController.addToInventory(item, currentScene);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
@@ -124,9 +129,11 @@ public class Game extends worldofzuul.Game {
                     :
                     "Er du sikker på, at " + item.getName() + " ikke høre til i naturen? Anyways, " + item.getName() + " ligger nu i dit inventory!";
             System.out.println(feedbackMessage);
+
+            pubSub.publish("fx_sceneChanged", sceneController.getCurrentScene().getSlug());
         } else {
             System.out.println("Kunne ikke samle tingen op, vil du prøve igen?");
-            pubSub.publish("fx_notify", "Kunne ikke samle tingen op#Test!");
+            pubSub.publish("fx_notify", "Kunne ikke samle tingen op#Har du måske allerede den i inventoryet?");
         }
 
     }

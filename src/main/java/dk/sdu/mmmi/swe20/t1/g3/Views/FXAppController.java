@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views;
 
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Main;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FXAppController implements Initializable {
     SceneController sceneController = SceneController.getInstance();
@@ -46,6 +48,8 @@ public class FXAppController implements Initializable {
 
     @FXML
     Text UI_SceneLabel;
+
+    ArrayList<Rectangle> itemsSpawned = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -109,6 +113,7 @@ public class FXAppController implements Initializable {
         Scene s = sceneController.getSceneBySlug((String) payload);
 
         setSceneLabel(s.getName());
+        despawnItems();
         spawnItems(s);
 
     }
@@ -128,10 +133,23 @@ public class FXAppController implements Initializable {
         UI_SceneLabel.setText(sceneName);
     }
 
+    private void despawnItems() {
+        Platform.runLater(() -> {
+            for (Rectangle i : itemsSpawned) {
+                GameWindow.getChildren().remove(i);
+            }
+        });
+    }
+
     private void spawnItems(Scene s) {
         Platform.runLater(() -> {
-            ArrayList<Item> i = itemController.getItemsByScene(s);
-            for (Item item : i) {
+            InventoryController inventoryController = InventoryController.getInstance();
+
+            ArrayList<Item> items = itemController.getItemsByScene(sceneController.getCurrentScene());
+            ArrayList<Item> itemsNotPickedUp = new ArrayList<Item>(items.stream().filter(x -> !inventoryController.containsRoomItem(sceneController.getCurrentScene(), x)).collect(Collectors.toList()));
+
+            for (Item item : itemsNotPickedUp) {
+
                 SceneLocation pos = item.getSpawns().get(s);
                 if(pos.getX() == 0 && pos.getY() == 0) continue;
 
@@ -142,11 +160,16 @@ public class FXAppController implements Initializable {
                 box.setWidth(120);
                 box.setHeight(120);
 
-                InputStream is = Main.class.getResourceAsStream(item.getTexture());
-                Image img = new Image(is);
+                try {
+                    InputStream is = Main.class.getResourceAsStream(item.getTexture());
+                    Image img = new Image(is);
 
-                box.setFill(new ImagePattern(img));
+                    box.setFill(new ImagePattern(img));
+                } catch (Exception e) {
+                    box.setFill(Color.BLACK);
+                }
 
+                itemsSpawned.add(box);
                 GameWindow.getChildren().add(box);
             }
         });
