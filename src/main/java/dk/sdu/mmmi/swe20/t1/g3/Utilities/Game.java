@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 public class Game extends worldofzuul.Game {
     private final SceneController sceneController = SceneController.getInstance();
+    private final ItemController itemController = ItemController.getInstance();
+    private final InventoryController inventoryController = InventoryController.getInstance();
     private final PubSub pubSub = PubSub.getInstance();
 
     private final Parser parser = new dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser();
@@ -46,6 +48,7 @@ public class Game extends worldofzuul.Game {
             case INVENTORY -> printInventory();
             case HELP -> printHelp();
             case QUIT -> wantToQuit = quit(command);
+            case DROP -> dropItem(command);
         }
 
         return wantToQuit;
@@ -75,8 +78,7 @@ public class Game extends worldofzuul.Game {
     }
 
     @Override
-    public void goRoom(Command command)
-    {
+    public void goRoom(Command command) {
         if(!command.hasSecondWord()) {
             System.out.println("Hvor vil du gå hen?");
             return;
@@ -137,6 +139,27 @@ public class Game extends worldofzuul.Game {
         }
 
     }
+
+    void dropItem(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Hvad skal jeg lægge tilbage?");
+        }
+        String itemSlug = command.getSecondWord();
+        Scene currentScene = sceneController.getCurrentScene();
+
+        if(inventoryController.containsRoomItem(currentScene,
+                itemController.getItemBySlug(command.getSecondWord()))) {
+            Item item = itemController.getItemBySlug(itemSlug);
+            inventoryController.dropItemFromInventory(item, currentScene);
+            String feedbackMessage = item.getItemType() == ItemType.BIO ?
+                    "Tak fordi du puttede " + item.getName() + " tilbage i naturen"
+                    :
+                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen? " + item.getName() + " ligger nu i naturen igen";
+            System.out.println(feedbackMessage);
+
+        }
+    }
+
 
     public void printHelp() {
         System.out.println("I World of Fish skal du bidrage til miljøet.");
