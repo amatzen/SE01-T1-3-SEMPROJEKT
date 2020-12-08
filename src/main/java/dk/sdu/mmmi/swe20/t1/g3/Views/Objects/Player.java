@@ -1,19 +1,18 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
+import dk.sdu.mmmi.swe20.t1.g3.Views.FXAppController;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends Sprite {
-
+    private FXAppController fxAppController = null;
     private HashMap<String, Boolean> animations = new HashMap<>();
 
     private final double DEFAULT_MOVEMENT_FACTOR = 5;
@@ -21,8 +20,9 @@ public class Player extends Sprite {
 
     private double centerX, centerY = 0;
 
-    public Player(int x, int y, int w, int h, Color color) {
+    public Player(FXAppController appController, int x, int y, int w, int h, Color color) {
         super(x, y, w, h, "player", color);
+        fxAppController = appController;
 
         centerX = getBoundsInParent().getCenterX();
         centerY = getBoundsInParent().getCenterY();
@@ -35,6 +35,8 @@ public class Player extends Sprite {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                checkDistanceToItem();
+
                 double MOVEMENT_FACTOR = DEFAULT_MOVEMENT_FACTOR;
                 int dx = 0, dy = 0;
 
@@ -92,6 +94,28 @@ public class Player extends Sprite {
             case A -> animations.put("a", false);
             case S -> animations.put("s", false);
             case D -> animations.put("d", false);
+        }
+    }
+
+    private void checkDistanceToItem() {
+        boolean closeToItem = false;
+
+        ArrayList<Rectangle> itemsSpawned = fxAppController.getItemsSpawned();
+        for ( Rectangle i : itemsSpawned ) {
+            var x_1 = this.getBoundsInParent().getCenterX();
+            var y_1 = this.getBoundsInParent().getCenterY();
+
+            var x_2 = i.getBoundsInParent().getCenterX();
+            var y_2 = i.getBoundsInParent().getCenterY();
+
+            if ( new FXUtils().calculateDistanceBetweenPoints(x_1, y_1, x_2, y_2) <= 140 ) closeToItem = true;
+        }
+
+        if(closeToItem) {
+            fxAppController.getPlayerActionIdenticator().setText("E");
+            fxAppController.getPlayerActionIdenticator().show();
+        } else {
+            fxAppController.getPlayerActionIdenticator().hide();
         }
     }
 

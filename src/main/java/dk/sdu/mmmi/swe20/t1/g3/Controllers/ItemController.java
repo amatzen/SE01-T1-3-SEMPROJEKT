@@ -53,8 +53,9 @@ public class ItemController {
 
         ArrayList<Item> itemsInScene = getItemsByScene(sceneSlug);
         for (Item item: itemsInScene) {
-            if(item.getSlug().equals(itemSlug)) {
+            if (item.getSlug().equals(itemSlug)) {
                 hasItem = true;
+                break;
             }
         }
         return hasItem;
