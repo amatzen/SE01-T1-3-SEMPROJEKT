@@ -33,7 +33,7 @@ public class PlayerActionIdenticator {
 
         view = new StackPane();
         view.getChildren().add(new Rectangle(20, 20, Color.DARKTURQUOISE));
-        view.getChildren().add(new Text("t"));
+        view.getChildren().add(new Text(""));
 
         view.setAlignment(Pos.CENTER);
 
@@ -42,6 +42,7 @@ public class PlayerActionIdenticator {
 
     public void show() {
         shown = true;
+        ((Text) view.getChildren().get(1)).setText(text);
         view.setVisible(true);
     }
 
