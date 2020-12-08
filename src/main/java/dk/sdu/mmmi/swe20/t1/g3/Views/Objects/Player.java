@@ -1,13 +1,8 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
 import java.util.Map;
