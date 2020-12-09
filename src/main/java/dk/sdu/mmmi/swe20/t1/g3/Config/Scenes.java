@@ -47,7 +47,7 @@ public enum Scenes {
             "Du befinder dig stadig på Stranden!",
             "",
             Map.of(
-                    LEFT, "hav",
+                    RIGHT, "hav",
                     UP, "strand"
             )
     ),
