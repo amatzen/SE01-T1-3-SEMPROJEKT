@@ -49,12 +49,12 @@ public class InventoryViewController {
             for ( StackPane sp : new StackPane[] { itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4 }) {
                 int finalI = i;
 
-                sp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                sp.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if(invLocation.get(finalI) == null) return;
 
-                        String targetSlug = invLocation.get(0).getSlug();
+                        String targetSlug = invLocation.get(finalI).getSlug();
                         pubSub.publish("executeCommand", String.format("drop %s", targetSlug));
                         pubSub.publish("fx_respawnItems", true);
                     }

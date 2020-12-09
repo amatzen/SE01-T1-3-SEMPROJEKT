@@ -194,11 +194,11 @@ public class Game extends worldofzuul.Game {
         else {
             Item item = itemController.getItemBySlug(itemSlug);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
-                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..? I hvert fald kan " + item.getName() +
-                    " kun droppes i rummet du fandt " + item.getName() + " find rummet og prøv igen!"
+                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..?\n I hvert fald kan " + item.getName() +
+                    " kun droppes i rummet du fandt " + item.getName() + ".\nFind rummet og prøv igen!"
                     :
-                    "God ide at putte " + item.getName() + " tilbage i naturen, men for at putte " + item.getName() +
-                    " tilbae i naturen, skal du lægge det i rummet hvor du fandt det. Tak!";
+                    "God ide at putte " + item.getName() + " tilbage i naturen,\n men for at putte " + item.getName() +
+                    " tilbae i naturen,\n skal du lægge det i rummet hvor du fandt det. Tak!";
 
             pubSub.publish("fx_notify", String.format("%s#%s", "Du skal ind i et andet rum.", feedbackMessage));
             System.out.println(feedbackMessage);
@@ -228,7 +228,7 @@ public class Game extends worldofzuul.Game {
             inventoryController.dumpInventory();
 
             System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket har gjort at alt skraldet er kommet tilbage.");
-            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket har gjort at skraldet er kommet tilbage ude i naturen.");
+            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket\n har gjort at skraldet er kommet tilbage ude i naturen.");
         }
 
     }
