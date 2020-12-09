@@ -49,6 +49,7 @@ public class Game extends worldofzuul.Game {
             case INVENTORY -> printInventory();
             case INTERACT ->  interactWithItem(command);
             case HELP -> printHelp();
+            case DUMP -> dumpItems();
             case QUIT -> wantToQuit = quit(command);
             case DROP -> dropItem(command);
         }
@@ -188,6 +189,20 @@ public class Game extends worldofzuul.Game {
                     " tilbae i naturen, skal du lægge det i rummet hvor du fandt det. Tak!!";
             System.out.println(feedbackMessage);
         }
+    }
+    void dumpItems(){
+        if (inventoryController.getInventory().isEmpty()){
+            System.out.println("Der er ikke noget i din taske at smide ud.");
+        }
+        else
+        {
+            inventoryController.dumpInventory();
+            System.out.println("Nu har du smidt alt fra din taske ud i skraldespanden");
+        }
+
+
+
+
     }
 
 
