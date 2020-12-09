@@ -91,6 +91,10 @@ public class FXAppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         pubSub.addListener("fx_sceneChanged", (type, object) -> onSceneChange(object));
+        pubSub.addListener("fx_respawnItems", (type, object) -> {
+            despawnItems();
+            spawnItems(sceneController.getCurrentScene());
+        });
         pubSub.addListener("fx_notify", (type, object) -> {
             String raw = (String) object;
             String[] formatted = raw.split("#");

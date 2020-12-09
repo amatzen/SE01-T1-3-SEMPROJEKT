@@ -2,6 +2,8 @@ package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -19,6 +21,17 @@ public class FXUtils {
         Optional<String> res = dialog.showAndWait();
 
         return res.orElse("");
+    }
+
+    public void promptOk(String title, String text, Runnable action) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setHeaderText(title);
+        a.setContentText(text);
+
+        a.showAndWait().ifPresent(response -> {
+            if(response == ButtonType.OK)
+                action.run();
+        });
     }
 
     public void emitNotify(String title, String text, int seconds) {
