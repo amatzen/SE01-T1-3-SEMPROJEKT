@@ -70,14 +70,14 @@ public enum Scenes {
             "Views/Scenes/10_HAVOVERFLADE.png",
             Map.of(
                     LEFT, "hav",
-                    RIGHT, "havv3",
+                    RIGHT, "klippetop",
                     DOWN, "skibsvrag"
             )
     ),
 
-    HAVV3(
-            "havv3",
-            "Havetv3",
+    KLIPPETOP(
+            "klippetop",
+            "Klippetoppen",
             "Velkommen til havetv3!",
             "Views/Scenes/11_HAVOVERFLADE_MED_KANT.png",
             Map.of(
@@ -113,7 +113,7 @@ public enum Scenes {
             "Velkommen til undervandklippen!",
             "Views/Scenes/17_HAVBUND_MED_KANT.png",
             Map.of(
-                    UP, "havv3",
+                    UP, "klippetop",
                     LEFT, "skibsvrag"
             )
     );
