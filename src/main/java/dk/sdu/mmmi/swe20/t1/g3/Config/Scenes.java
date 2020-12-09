@@ -31,7 +31,7 @@ public enum Scenes {
             "strand",
             "Stranden",
             "Velkommen til Stranden!",
-            "03_STRAND",
+            "Views/Scenes/07_STRAND_HAV.png",
             Map.of(
                     LEFT, "skov",
                     RIGHT, "hav",
@@ -43,10 +43,12 @@ public enum Scenes {
             "strandv2",
             "Strandenv2",
             "Du befinder dig stadig på Stranden!",
-            "",
+            "Views/Scenes/08_STRAND_HAV.png",
             Map.of(
                     RIGHT, "hav",
-                    UP, "strand"
+                    UP, "strand",
+                    LEFT, "skov"
+
             )
     ),
 
@@ -54,68 +56,65 @@ public enum Scenes {
             "hav",
             "Havet",
             "Velkommen til havet!",
-            "",
+            "Views/Scenes/09_HAVOVERFLADE_MED_BRO.png",
             Map.of(
-                    UP, "strand",
-                    DOWN,"havbund",
-                    RIGHT, "havv3",
-                    LEFT, "havv2"
+                    DOWN,"koralrev",
+                    RIGHT, "havv2",
+                    LEFT, "strand"
             )
     ),
-
     HAVV2(
             "havv2",
             "Havetv2",
-            "Velkommen til havetv2!",
-            "",
+            "Velkommen til Havetv2",
+            "Views/Scenes/10_HAVOVERFLADE.png",
             Map.of(
-                    UP, "strandv2",
-                    RIGHT, "hav",
-                    DOWN, "koralrev"
-            )
-    ),
-
-    HAVV3(
-            "havv3",
-            "Havetv3",
-            "Velkommen til havetv3!",
-            "",
-            Map.of(
-                    UP, "strand",
                     LEFT, "hav",
+                    RIGHT, "klippetop",
                     DOWN, "skibsvrag"
             )
     ),
 
-    HAVBUND("havbund",
-            "Havbunden",
-            "Velkommen til havbunden!",
-            "",
+    KLIPPETOP(
+            "klippetop",
+            "Klippetoppen",
+            "Velkommen til havetv3!",
+            "Views/Scenes/11_HAVOVERFLADE_MED_KANT.png",
             Map.of(
-                    UP, "hav",
+                    LEFT, "havv2",
+                    DOWN, "klippekant"
+            )
+    ),
+
+    SKIBSVRAG("skibsvrag",
+            "Skibsvraget",
+            "Velkommen til skibsvraget!",
+            "Views/Scenes/16_HAVBUND_MED_SKIBSSKROG.png",
+            Map.of(
+                    UP, "havv2",
                     LEFT, "koralrev",
-                    RIGHT,"skibsvrag"
+                    RIGHT,"klippekant"
             )
     ),
 
     KORALREV("koralrev",
             "Koralrevet",
             "Velkommen til koralrevet!",
-            "",
+            "Views/Scenes/14_KORALREV_HAVBUND.png",
             Map.of(
-                    UP, "havv2",
-                    RIGHT, "havbund"
+                    UP, "hav",
+                    RIGHT, "skibsvrag"
             )
     ),
 
-    SKIBSVRAG(
-            "skibsvrag",
-            "Skibsvraget",
-            "Velkommen til skibsvraget!",
-            "",
+    KLIPPEKANT(
+            "klippekant",
+            "Klippekant",
+            "Velkommen til undervandklippen!",
+            "Views/Scenes/17_HAVBUND_MED_KANT.png",
             Map.of(
-                    UP, "hav",
-                    LEFT, "havbund"
+                    UP, "klippetop",
+                    LEFT, "skibsvrag"
             )
     );
 
