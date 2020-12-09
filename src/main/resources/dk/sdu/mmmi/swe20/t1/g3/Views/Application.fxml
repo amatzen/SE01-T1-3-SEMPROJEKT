@@ -12,6 +12,7 @@
         <AnchorPane fx:id="GameWindow" prefHeight="900.0" prefWidth="1400.0" styleClass="gameWindow" style="-fx-background-color: #ff0000;"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="0.0"/>
+        <AnchorPane fx:id="UI_GameInformation" prefHeight="900.0" prefWidth="1400.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"></AnchorPane>
         <fx:include
                 fx:id="UI_Inventory"
                 source="Partials/inventory.fxml"

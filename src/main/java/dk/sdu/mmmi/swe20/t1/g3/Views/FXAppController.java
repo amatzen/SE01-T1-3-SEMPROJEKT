@@ -9,6 +9,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
+import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerAction;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerActionIdenticator;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
@@ -77,11 +78,13 @@ public class FXAppController implements Initializable {
     /**
      * The Items spawned.
      */
+    ArrayList<Item> itemsSpawnedObj = new ArrayList<>();
     ArrayList<Rectangle> itemsSpawned = new ArrayList<>();
+
     /**
-     * The PlayerActionIdenticator Object.
+     * The PlayerAction Object.
      */
-    PlayerActionIdenticator pai = null;
+    PlayerAction pa = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,7 +115,7 @@ public class FXAppController implements Initializable {
 
     private void spawnPlayer() {
         Player player = new Player(this,(1400/2) - 40/2, (840/2) - 70/2, 40, 70, Color.BLUE);
-        pai = new PlayerActionIdenticator(player);
+        pa = new PlayerAction(this, new PlayerActionIdenticator(player), player);
 
         Platform.runLater(() -> {
             AppWindow.getScene().setOnKeyPressed(e -> {
@@ -122,10 +125,12 @@ public class FXAppController implements Initializable {
 
                     case E -> {
                         player.stopMovement();
+                        pa.handleInteraction();
+                    }
 
-                        String whatToPickup = new FXUtils().prompt("Hvad skal jeg samle op?", "Skriv genstandens navn");
-                        if(whatToPickup.equals("")) return;
-                        pubSub.publish("executeCommand", "pickup " + whatToPickup);
+                    case X -> {
+                        player.stopMovement();
+                        pa.handleSceneSwitch();
                     }
                 }
             });
@@ -136,10 +141,8 @@ public class FXAppController implements Initializable {
                 }
             });
 
-            pai.hide();
-
             AppWindow.getChildren().add(1, player);
-            AppWindow.getChildren().add(2, pai.getView());
+            AppWindow.getChildren().add(2, pa.getPai().getView());
         });
     }
 
@@ -160,26 +163,50 @@ public class FXAppController implements Initializable {
         }
     }
 
-    @FXML
-    private void setSceneLabel(String sceneName) {
-        UI_SceneLabel.setText(sceneName);
+    /**
+     * Gets items spawned.
+     *
+     * @return the items spawned
+     */
+    public ArrayList<Item> getItemsSpawnedObj() {
+        return itemsSpawnedObj;
     }
-
-    private void despawnItems() {
-        Platform.runLater(() -> {
-            for (Rectangle i : itemsSpawned) {
-                GameWindow.getChildren().remove(i);
-            }
-        });
+    public ArrayList<Rectangle> getItemsSpawned() {
+        return itemsSpawned;
     }
 
     /**
-     * Gets player action identicator.
+     * Sets game window.
      *
-     * @return the player action identicator
+     * @param scene the scene
      */
-    public PlayerActionIdenticator getPlayerActionIdenticator() {
-        return pai;
+    @FXML
+    public void setGameWindow(String scene) {
+        GameWindow.getChildren().clear();
+        try {
+            ClassLoader classLoader = FXMLLoader.getDefaultClassLoader();
+            URL url = classLoader.getResource(scene);
+            GameWindow.getChildren().setAll((Collection<? extends Node>) FXMLLoader.load(url));
+            GameWindow.setStyle("-fx-background-color: aliceblue;");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public PlayerAction getPlayerAction() {
+        return pa;
+    }
+
+    /*
+    #
+    # Private
+    #
+    */
+
+
+    @FXML
+    private void setSceneLabel(String sceneName) {
+        UI_SceneLabel.setText(sceneName);
     }
 
     private void spawnItems(Scene s) {
@@ -193,6 +220,7 @@ public class FXAppController implements Initializable {
                             .collect(Collectors.toList())
             );
 
+            itemsSpawnedObj.clear();
             itemsSpawned.clear();
             for (Item item : itemsNotPickedUp) {
 
@@ -215,36 +243,21 @@ public class FXAppController implements Initializable {
                     box.setFill(Color.BLACK);
                 }
 
+                itemsSpawnedObj.add(item);
                 itemsSpawned.add(box);
+
                 GameWindow.getChildren().add(box);
             }
         });
     }
 
-    /**
-     * Gets items spawned.
-     *
-     * @return the items spawned
-     */
-    public ArrayList<Rectangle> getItemsSpawned() {
-        return itemsSpawned;
+    private void despawnItems() {
+        Platform.runLater(() -> {
+            for (Rectangle i : itemsSpawned) {
+                GameWindow.getChildren().remove(i);
+            }
+        });
     }
 
-    /**
-     * Sets game window.
-     *
-     * @param scene the scene
-     */
-    @FXML
-    public void setGameWindow(String scene) {
-        GameWindow.getChildren().clear();
-        try {
-            ClassLoader classLoader = FXMLLoader.getDefaultClassLoader();
-            URL url = classLoader.getResource(scene);
-            GameWindow.getChildren().setAll((Collection<? extends Node>) FXMLLoader.load(url));
-            GameWindow.setStyle("-fx-background-color: aliceblue;");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
+
 }

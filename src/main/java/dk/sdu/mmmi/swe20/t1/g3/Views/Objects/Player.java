@@ -35,34 +35,32 @@ public class Player extends Sprite {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                checkDistanceToItem();
+            double MOVEMENT_FACTOR = DEFAULT_MOVEMENT_FACTOR;
+            int dx = 0, dy = 0;
 
-                double MOVEMENT_FACTOR = DEFAULT_MOVEMENT_FACTOR;
-                int dx = 0, dy = 0;
+            if (animations.entrySet().stream().filter(Map.Entry::getValue).count() > 1) {
+                MOVEMENT_FACTOR *= DEFAULT_MOVEMENT_FACTOR_MODIFIER;
+            }
 
-                if (animations.entrySet().stream().filter(Map.Entry::getValue).count() > 1) {
-                    MOVEMENT_FACTOR *= DEFAULT_MOVEMENT_FACTOR_MODIFIER;
-                }
+            boolean
+                okUp, okDown, okLeft, okRight;
 
-                boolean
-                    okUp, okDown, okLeft, okRight;
+            okUp    = centerY - height/2  >= 0;
+            okDown  = centerY + height  <= 900;
 
-                okUp    = centerY - height/2  >= 0;
-                okDown  = centerY + height  <= 900;
+            okLeft  = centerX - width/2   >= 0;
+            okRight = centerX + width  <= 1400;
 
-                okLeft  = centerX - width/2   >= 0;
-                okRight = centerX + width  <= 1400;
+            if (getAnimation("w") && okUp   ) dy -= MOVEMENT_FACTOR;
+            if (getAnimation("s") && okDown ) dy += MOVEMENT_FACTOR;
+            if (getAnimation("a") && okLeft ) dx -= MOVEMENT_FACTOR;
+            if (getAnimation("d") && okRight) dx += MOVEMENT_FACTOR;
 
-                if (getAnimation("w") && okUp   ) dy -= MOVEMENT_FACTOR;
-                if (getAnimation("s") && okDown ) dy += MOVEMENT_FACTOR;
-                if (getAnimation("a") && okLeft ) dx -= MOVEMENT_FACTOR;
-                if (getAnimation("d") && okRight) dx += MOVEMENT_FACTOR;
+            setX(getX() + dx);
+            setY(getY() + dy);
 
-                setX(getX() + dx);
-                setY(getY() + dy);
-
-                centerX = getBoundsInParent().getCenterX();
-                centerY = getBoundsInParent().getCenterY();
+            centerX = getBoundsInParent().getCenterX();
+            centerY = getBoundsInParent().getCenterY();
             }
         };
         timer.start();
@@ -96,46 +94,5 @@ public class Player extends Sprite {
             case D -> animations.put("d", false);
         }
     }
-
-    private void checkDistanceToItem() {
-        boolean closeToItem = false;
-
-        ArrayList<Rectangle> itemsSpawned = fxAppController.getItemsSpawned();
-        for ( Rectangle i : itemsSpawned ) {
-            var x_1 = this.getBoundsInParent().getCenterX();
-            var y_1 = this.getBoundsInParent().getCenterY();
-
-            var x_2 = i.getBoundsInParent().getCenterX();
-            var y_2 = i.getBoundsInParent().getCenterY();
-
-            if ( new FXUtils().calculateDistanceBetweenPoints(x_1, y_1, x_2, y_2) <= 140 ) closeToItem = true;
-        }
-
-        if(closeToItem) {
-            fxAppController.getPlayerActionIdenticator().setText("E");
-            fxAppController.getPlayerActionIdenticator().show();
-        } else {
-            fxAppController.getPlayerActionIdenticator().hide();
-        }
-    }
-
-    /*
-    private boolean checkShapeIntersection(Shape shape) {
-        boolean collisionDetected = false;
-        for (Shape static_bloc : nodes) {
-            if (static_bloc != shape) {
-                static_bloc.setFill(Color.GREEN);
-
-                Shape intersect = Shape.intersect(shape, static_bloc);
-                if (intersect.getBoundsInLocal().getWidth() != -1) {
-                    collisionDetected = true;
-                }
-            }
-        }
-
-        return collisionDetected;
-    }
-
-     */
 
 }

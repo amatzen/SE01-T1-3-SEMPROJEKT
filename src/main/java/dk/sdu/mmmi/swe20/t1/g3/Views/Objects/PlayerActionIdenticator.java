@@ -36,6 +36,7 @@ public class PlayerActionIdenticator {
         view.getChildren().add(new Text(""));
 
         view.setAlignment(Pos.CENTER);
+        view.getChildren().get(0).setStyle("-fx-border-radius: 5px;");
 
         view.setVisible(false);
     }
