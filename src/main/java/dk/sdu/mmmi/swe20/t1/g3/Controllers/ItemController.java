@@ -23,7 +23,7 @@ public class ItemController {
     private ItemController() {
         for (Items item: Items.values()) {
             if(item.getItemAction() == ItemAction.INTERACTABLE) {
-                items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
+                items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction(), item.getRunnable()));
             } else {
                 items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
             }
