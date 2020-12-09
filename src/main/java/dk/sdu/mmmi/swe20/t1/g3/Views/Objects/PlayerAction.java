@@ -42,7 +42,7 @@ public class PlayerAction {
         if( closeToItem.getItemAction().equals( ItemAction.PICKUPABLE )) {
             pubSub.publish("executeCommand", "pickup " + closeToItem.getSlug());
         } else if ( closeToItem.getItemAction().equals( ItemAction.INTERACTABLE ) ) {
-            closeToItem.getInteractHandler().run();
+            pubSub.publish("executeCommand", "interact " + closeToItem.getSlug());
         }
     }
 
