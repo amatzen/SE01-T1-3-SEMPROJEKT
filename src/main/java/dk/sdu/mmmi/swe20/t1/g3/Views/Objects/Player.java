@@ -6,7 +6,14 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,5 +101,34 @@ public class Player extends Sprite {
             case D -> animations.put("d", false);
         }
     }
+
+    private HashMap<KeyCode, Boolean> Keys = new HashMap<>();
+    Image image = new Image(getClass().getResourceAsStream("Character.png"));
+    ImageView imageView = new ImageView(image);
+    Character player = new Character(imageView);
+
+    public void update() {
+        if (isPressed(KeyCode.UP)) {
+            player.animation.play();
+            player.animation.setOffsetY(96);
+            player.moveY(-2);
+        }else if (keys.isDown(KeyCode.DOWN) || keys.isDown(KeyCode.S)) {
+            player.animation.play();
+            player..setOffsetY(96);
+            player.moveY(2);
+        }else if (keys.isDown(KeyCode.RIGHT) || keys.isDown(KeyCode.D)) {
+            player.animation.play();
+            player.animation.setOffsetY(96);
+            player.moveX(2);
+        }else if (keys.isDown(KeyCode.LEFT) || keys.isDown(KeyCode.A)) {
+            player.animation.play();
+            player.animation.setOffsetY(96)
+            player.moveY(-2);
+        }
+        else {
+            player.animation.stop();
+        }
+    }
+
 
 }
