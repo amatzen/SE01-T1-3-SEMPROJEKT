@@ -8,6 +8,7 @@ public enum CommandWord
     PICKUP("pickup"),
     DROP("drop"),
     INVENTORY("inventory"),
+    INTERACT("interact"),
     DUMP("dump"),
     UNKNOWN("?");
     

@@ -5,6 +5,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import io.github.techrobby.SimplePubSub.PubSub;
 import worldofzuul.Command;
@@ -46,6 +47,7 @@ public class Game extends worldofzuul.Game {
             case GO -> goRoom(command);
             case PICKUP -> pickupItem(command);
             case INVENTORY -> printInventory();
+            case INTERACT ->  interactWithItem(command);
             case HELP -> printHelp();
             case QUIT -> wantToQuit = quit(command);
             case DROP -> dropItem(command);
@@ -109,6 +111,23 @@ public class Game extends worldofzuul.Game {
         InventoryController.getInstance().printInventory();
     }
 
+    void interactWithItem(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Hvad skal jeg gøre?");
+        }
+
+        ItemController itemController = ItemController.getInstance();
+        Scene currentScene = sceneController.getCurrentScene();
+
+        String itemSlug = command.getSecondWord();
+
+        if (itemController.hasItem(currentScene, itemSlug) && itemController.getItemBySlug(itemSlug).getItemAction() == ItemAction.INTERACTABLE) {
+            itemController.getItemBySlug(itemSlug).getInteractHandler().run();
+        } else {
+            System.out.println("Kunne ikke udføre handlingen.");
+        }
+    }
+
     void pickupItem(Command command) {
         if(!command.hasSecondWord()) {
             System.out.println("Hvad skal jeg samle op?");
@@ -123,13 +142,15 @@ public class Game extends worldofzuul.Game {
         ArrayList<Item> items = itemController.getItemsByScene(sceneController.getCurrentScene());
         ArrayList<Item> itemsNotPickedUp = new ArrayList<Item>(items.stream().filter(x -> !inventoryController.containsRoomItem(sceneController.getCurrentScene(), x)).collect(Collectors.toList()));
 
-        if(itemController.hasItem(currentScene, itemSlug) && itemsNotPickedUp.contains(itemController.getItemBySlug(itemSlug))) {
+        if(itemController.hasItem(currentScene, itemSlug) && itemsNotPickedUp.contains(itemController.getItemBySlug(itemSlug)) && itemController.getItemBySlug(itemSlug).getItemAction() == ItemAction.PICKUPABLE) {
+
             Item item = itemController.getItemBySlug(itemSlug);
             inventoryController.addToInventory(item, currentScene);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
                     "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!"
                     :
-                    "Er du sikker på, at " + item.getName() + " ikke høre til i naturen? Anyways, " + item.getName() + " ligger nu i dit inventory!";
+                    "Er du sikker på, at " + item.getName() + " ikke høre til i naturen?\nAnyways, " + item.getName() + " ligger nu i dit inventory!";
+            pubSub.publish("fx_notify", String.format("Ting samlet op#%s", feedbackMessage));
             System.out.println(feedbackMessage);
 
             pubSub.publish("fx_sceneChanged", sceneController.getCurrentScene().getSlug());
