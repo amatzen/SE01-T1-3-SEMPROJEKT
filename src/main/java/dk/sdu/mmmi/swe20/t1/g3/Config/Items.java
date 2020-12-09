@@ -2,7 +2,10 @@ package dk.sdu.mmmi.swe20.t1.g3.Config;
 
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Utils;
+import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.scene.shape.Box;
 
 import java.util.HashMap;
@@ -67,7 +70,9 @@ public enum Items {
             ),
             ItemAction.INTERACTABLE,
             () -> {
+                PubSub.getInstance().publish("executeCommand","dump");
                 System.out.println("Test");
+
             }
     );
 
