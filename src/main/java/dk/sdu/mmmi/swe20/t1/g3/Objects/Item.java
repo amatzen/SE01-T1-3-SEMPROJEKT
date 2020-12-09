@@ -80,4 +80,8 @@ public class Item {
     public Runnable getInteractHandler() {
         return interactHandler;
     }
+
+    public void setSpawns(HashMap<Scene, SceneLocation> spawns) {
+        this.spawns = spawns;
+    }
 }
