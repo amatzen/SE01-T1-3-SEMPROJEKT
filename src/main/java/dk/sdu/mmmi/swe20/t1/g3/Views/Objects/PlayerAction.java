@@ -52,7 +52,19 @@ public class PlayerAction {
         if ( closeToDir == null ) return;
         try {
             pubSub.publish("executeCommand", String.format("go %s", closeToDir.getDirectionString()));
-            //sceneController.goToScene(sceneController.getCurrentScene().getExit(closeToDir.getDirectionString()));
+
+            // Move player
+            double  curX = player.getX(),
+                    curY = player.getY();
+
+            double  newX = curX*(-1),
+                    newY = curY*(-1);
+
+            if(closeToDir == Direction.LEFT || closeToDir == Direction.RIGHT)
+                player.setX(newX);
+            else
+                player.setY(newY);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
