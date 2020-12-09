@@ -20,6 +20,8 @@ public class Player extends Sprite {
 
     private double centerX, centerY = 0;
 
+    private boolean isWalking = false;
+
     public Player(FXAppController appController, int x, int y, int w, int h, Color color) {
         super(x, y, w, h, "player", color);
         fxAppController = appController;
