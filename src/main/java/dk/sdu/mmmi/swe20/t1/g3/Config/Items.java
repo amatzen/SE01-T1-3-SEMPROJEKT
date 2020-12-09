@@ -68,8 +68,6 @@ public enum Items {
             ItemAction.INTERACTABLE,
             () -> {
                 PubSub.getInstance().publish("executeCommand","dump");
-                System.out.println("Test");
-
             }
     );
 

@@ -7,7 +7,9 @@ import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ItemController {
     // Singleton Pattern Declaration
@@ -28,6 +30,19 @@ public class ItemController {
                 items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
             }
         }
+    }
+
+    public void removeSceneFromItem(Item item, Scene scene) {
+        HashMap<Scene, SceneLocation> initialSpawns = item.getSpawns();
+        HashMap<Scene, SceneLocation> newSpawns = new HashMap<>();
+
+        for (Map.Entry<Scene, SceneLocation> e : initialSpawns.entrySet()) {
+            if( e.getKey() != scene ) {
+                newSpawns.put(e.getKey(), e.getValue());
+            }
+        }
+
+        item.setSpawns(newSpawns);
     }
 
     public ArrayList<Item> getItemsByScene(String slug) {
