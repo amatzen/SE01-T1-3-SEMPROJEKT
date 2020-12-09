@@ -92,12 +92,16 @@ public class FXAppController implements Initializable {
             String[] formatted = raw.split("#");
 
             Platform.runLater(() -> {
-                Notifications.create()
-                    .darkStyle()
-                    .title(formatted[0])
-                    .text(formatted[1])
-                    .hideAfter(Duration.seconds(5))
-                    .show();
+                try {
+                    Notifications.create()
+                        .darkStyle()
+                        .title(formatted[0])
+                        .text(formatted[1])
+                        .hideAfter(Duration.seconds(5))
+                        .show();
+                } catch (Exception e) {
+                    // Nothing
+                }
             });
         });
 
