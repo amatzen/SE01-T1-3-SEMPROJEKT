@@ -24,7 +24,7 @@ public class SceneController {
 
     private SceneController() {
         for(Scenes scene : Scenes.values()) {
-            scenes.add(new Scene(scene.getSlug(), scene.getName(), scene.getDescription(), scene.getExitsString()));
+            scenes.add(new Scene(scene.getSlug(), scene.getName(), scene.getDescription(), scene.getSceneURL(), scene.getExitsString()));
         }
 
         this.convertStringsToScenes();

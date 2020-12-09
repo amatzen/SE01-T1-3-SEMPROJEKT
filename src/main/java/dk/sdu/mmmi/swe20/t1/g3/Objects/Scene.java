@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 public class Scene extends worldofzuul.Room {
     public String slug; // Utrolig kort, alfanumerisk ID
     public String name; // Navnet på scenen, bruges til identifikation mellem scener.
+    private String sceneURL;
     private HashMap<String, String> exitsString;
     private HashMap<String, Scene> exits;
-    private ArrayList<String> itemsString;
-    private ArrayList<Item> items;
 
     // Constructor without any particular options / games
-    public Scene(String slug, String name, String description, Map<String, String> exits) {
+    public Scene(String slug, String name, String description, String sceneURL, Map<String, String> exits) {
         super(description);
         this.name = name;
         this.slug = slug;
+        this.sceneURL = sceneURL;
         this.exitsString = new HashMap<String, String>(exits);
     }
 
@@ -66,6 +66,10 @@ public class Scene extends worldofzuul.Room {
     }
     public String getDescription() { return super.getShortDescription(); }
     public String getName() { return name; }
+
+    public String getSceneURL() {
+        return sceneURL;
+    }
 
     @Override
     public Scene getExit(String direction) {

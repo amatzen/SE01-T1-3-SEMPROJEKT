@@ -5,14 +5,12 @@ import java.util.stream.Collectors;
 
 import static dk.sdu.mmmi.swe20.t1.g3.Config.Direction.*;
 
-// TODO: JavaFX
-
 public enum Scenes {
     START(
             "start",
             "Starten",
             "Velkommen til Starten",
-            "01_START",
+            "Views/Scenes/01_START.png",
             Map.of(
                     RIGHT, "skov"
             )
@@ -20,9 +18,9 @@ public enum Scenes {
 
     SKOV(
             "skov",
-            "Skoven",
-            "Velkommen til skoven",
-            "02_SKOV",
+            "Strandindgangen",
+            "Velkommen til Strandindgangen",
+            "Views/Scenes/02_LAND_STRAND.png",
             Map.of(
                     RIGHT, "strand",
                     LEFT, "start"
@@ -125,12 +123,13 @@ public enum Scenes {
 
     private String slug, name, description, fxmlScene;
     private Map<String, String> exits;
+    private String sceneURL;
 
-    Scenes(String slug, String name, String description, String fxmlScene, Map<Direction, String> exits) {
+    Scenes(String slug, String name, String description, String sceneURL, Map<Direction, String> exits) {
         this.slug = slug;
         this.name = name;
         this.description = description;
-        this.fxmlScene = fxmlScene;
+        this.sceneURL = sceneURL;
         this.exits = exits.entrySet().stream()
             .collect(Collectors.toMap(e->e.getKey().getDirectionString(), Map.Entry::getValue));
     };
@@ -151,4 +150,5 @@ public enum Scenes {
         return exits;
     }
 
+    public String getSceneURL() { return sceneURL; }
 }

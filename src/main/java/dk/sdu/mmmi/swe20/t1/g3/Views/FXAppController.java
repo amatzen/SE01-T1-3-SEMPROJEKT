@@ -7,6 +7,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Main;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
+import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerAction;
@@ -108,8 +109,7 @@ public class FXAppController implements Initializable {
             });
         });
 
-        setSceneLabel(sceneController.getCurrentScene().getName());
-        spawnItems(sceneController.getCurrentScene());
+        pubSub.publish("fx_sceneChanged", sceneController.getCurrentScene().getSlug());
         spawnPlayer();
     }
 
@@ -148,6 +148,31 @@ public class FXAppController implements Initializable {
 
     private void onSceneChange(Object payload) {
         Scene s = sceneController.getSceneBySlug((String) payload);
+
+
+        Platform.runLater(() ->  {
+            // Set background
+            if(s.getSceneURL() != "") {
+                GameWindow.setStyle("-fx-background-color: #fff;");
+
+                Rectangle backdrop = new Rectangle(1400, 900);
+
+                try {
+                    InputStream is = Main.class.getResourceAsStream(s.getSceneURL());
+                    Image img = new Image(is);
+
+                    backdrop.setFill(new ImagePattern(img));
+                } catch (Exception e) {
+                    backdrop.setFill(Color.BLACK);
+                }
+
+                if (GameWindow.getChildren().size() > 0)
+                    GameWindow.getChildren().remove(0);
+
+                GameWindow.getChildren().add(backdrop);
+
+            }
+        });
 
         setSceneLabel(s.getName());
         despawnItems();
@@ -191,10 +216,6 @@ public class FXAppController implements Initializable {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-    }
-
-    public PlayerAction getPlayerAction() {
-        return pa;
     }
 
     /*
