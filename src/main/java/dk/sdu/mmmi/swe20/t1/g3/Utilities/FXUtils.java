@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextInputDialog;
 import javafx.util.Duration;
@@ -36,4 +37,15 @@ public class FXUtils {
             double y2) {
         return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
+
+    public double calculateDistanceBetweenPointAndLine(
+        Point2D p,
+        double a,
+        double b,
+        double c) {
+
+        return Math.abs(((a * p.getX() + b * p.getY() + c)) /
+                (Math.sqrt(a * a + b * b)));
+    }
+
 }
