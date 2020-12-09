@@ -6,6 +6,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import io.github.techrobby.SimplePubSub.PubSub;
+import javafx.scene.Scene;
 import javafx.scene.shape.Box;
 
 import java.util.HashMap;
@@ -31,8 +32,10 @@ public enum Items {
             ItemType.BIO,
             Map.of(
                 "strand", new SceneLocation(500,300),
-                "hav", new SceneLocation(1100, 50),
-                "skibsvrag", new SceneLocation(0, 0)
+                "koralrev", new SceneLocation(250, 600),
+                "skibsvrag", new SceneLocation(200, 600),
+                    "klippekant", new SceneLocation(500, 600),
+                    "strandv2", new SceneLocation(790, 600)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -66,7 +69,7 @@ public enum Items {
             "Views/Items/SKRALDESPAND.png",
             ItemType.INTERACTABLE,
             Map.of(
-                "start", new SceneLocation(60, 89)
+                "start", new SceneLocation(600, 200)
             ),
             ItemAction.INTERACTABLE,
             () -> {
