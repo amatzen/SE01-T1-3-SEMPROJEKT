@@ -31,7 +31,7 @@ public enum Scenes {
             "strand",
             "Stranden",
             "Velkommen til Stranden!",
-            "03_STRAND",
+            "Views/Scenes/07_STRAND_HAV.png",
             Map.of(
                     LEFT, "skov",
                     RIGHT, "hav",
@@ -43,7 +43,7 @@ public enum Scenes {
             "strandv2",
             "Strandenv2",
             "Du befinder dig stadig på Stranden!",
-            "",
+            "Views/Scenes/04, strand_vand.png",
             Map.of(
                     RIGHT, "hav",
                     UP, "strand"
