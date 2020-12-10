@@ -222,13 +222,13 @@ public class Game extends worldofzuul.Game {
 
             inventoryController.dumpInventory();
 
-            System.out.println("Du har nu tømt din taske. Der lå intet bioaffald deri, sådan!");
-            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå intet bioaffald deri, sådan!");
+            System.out.println("Du har nu tømt din taske. Der lå intet bioaffald deri, sådan!\nFjern alt skrald du kan finde, for at redde livet havet!");
+            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå intet bioaffald deri, sådan!\nFjern alt skrald du kan finde, for at redde livet havet!");
         } else {
             inventoryController.dumpInventory();
 
-            System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket har gjort at alt skraldet er kommet tilbage.");
-            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket\n har gjort at skraldet er kommet tilbage ude i naturen.");
+            System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
+            pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket\n ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
         }
 
     }

@@ -14,10 +14,10 @@ import java.util.Map;
 
 public enum Items {
     // Pickupables
-    PLASTAFFALD(
+    SKRALD(
             "skrald",
             "Skrald",
-            "Views/Items/PLASTAFFALD.png",
+            "Views/Items/SKRALD.png",
             ItemType.TRASH,
             Map.of(
                 "start", new SceneLocation(430,560),
