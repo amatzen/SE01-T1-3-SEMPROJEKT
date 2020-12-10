@@ -12,12 +12,12 @@ public enum Scenes {
             "Velkommen til Starten",
             "Views/Scenes/01_START.png",
             Map.of(
-                    RIGHT, "skov"
+                    RIGHT, "strandindgang"
             )
     ),
 
-    SKOV(
-            "skov",
+    STRANDINDGANG(
+            "strandindgang",
             "Strandindgangen",
             "Velkommen til Strandindgangen",
             "Views/Scenes/02_LAND_STRAND.png",
@@ -33,7 +33,7 @@ public enum Scenes {
             "Velkommen til Stranden!",
             "Views/Scenes/07_STRAND_HAV.png",
             Map.of(
-                    LEFT, "skov",
+                    LEFT, "strandindgang",
                     RIGHT, "hav",
                     DOWN, "strandv2"
             )
@@ -47,7 +47,7 @@ public enum Scenes {
             Map.of(
                     RIGHT, "hav",
                     UP, "strand",
-                    LEFT, "skov"
+                    LEFT, "strandindgang"
 
             )
     ),
