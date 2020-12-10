@@ -155,7 +155,7 @@ public class Game extends worldofzuul.Game {
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
                     "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!"
                     :
-                    "Er du sikker på, at " + item.getName() + " ikke høre til i naturen?\nAnyways, " + item.getName() + " ligger nu i dit inventory!";
+                    "Er du sikker på, at " + item.getName() + " ikke hører til i naturen?\nAnyways, " + item.getName() + " ligger nu i dit inventory!";
             pubSub.publish("fx_notify", String.format("Ting samlet op#%s", feedbackMessage));
             System.out.println(feedbackMessage);
 

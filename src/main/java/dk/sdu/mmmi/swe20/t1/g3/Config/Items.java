@@ -57,7 +57,7 @@ public enum Items {
     ),
     PLASTIKBUNKE(
             "plastikbunke",
-            "Plastikbunkena",
+            "Plastikbunken",
             "Views/Items/PLASTIKBUNKE.png",
             ItemType.PLASTIC,
             Map.of(
@@ -66,6 +66,20 @@ public enum Items {
                     "koralrev", new SceneLocation(250, 450),
                     "klippekant", new SceneLocation(150, 500),
                     "strandv2", new SceneLocation(1000, 515)
+            ),
+            ItemAction.PICKUPABLE
+    ),
+    BLÅMUSLING(
+            "blåmusling",
+            "Blåmuslingen",
+            "Views/Items/BLÅMUSLING.png",
+            ItemType.BIO,
+            Map.of(
+                    "strand", new SceneLocation(400, 550),
+                    "skibsvrag", new SceneLocation(1200, 440),
+                    "strandv2", new SceneLocation(250, 450),
+                    "skov", new SceneLocation(1200, 300),
+                    "klippekant", new SceneLocation(800, 450)
             ),
             ItemAction.PICKUPABLE
     ),
