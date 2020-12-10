@@ -34,15 +34,6 @@ public class FXUtils {
         });
     }
 
-    public void emitNotify(String title, String text, int seconds) {
-        Notifications notificationBuilder = Notifications.create()
-                .title(title)
-                .text(text)
-                .hideAfter(Duration.seconds(seconds))
-                .position(Pos.BOTTOM_RIGHT);
-        notificationBuilder.showInformation();
-    }
-
     public double calculateDistanceBetweenPoints(
             double x1,
             double y1,
