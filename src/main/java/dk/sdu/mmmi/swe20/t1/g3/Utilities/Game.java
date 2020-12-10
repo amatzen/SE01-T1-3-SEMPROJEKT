@@ -175,6 +175,13 @@ public class Game extends worldofzuul.Game {
         String itemSlug = command.getSecondWord();
         Scene currentScene = sceneController.getCurrentScene();
 
+        if(
+            !itemController.hasItem(currentScene, itemSlug)
+        ) {
+            System.out.println("Kunne ikke smide tingen væk, vil du prøve igen?");
+            return;
+        }
+
         if(inventoryController.containsRoomItem(currentScene,
                 itemController.getItemBySlug(command.getSecondWord()))) {
             Item item = itemController.getItemBySlug(itemSlug);
@@ -184,9 +191,9 @@ public class Game extends worldofzuul.Game {
                     :
                     "Er du nu helt sikker?";
             String feedbackMessage = item.getItemType() == ItemType.BIO ?
-                    "Tak fordi du puttede " + item.getName() + " tilbage i naturen"
-                    :
-                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen?\nAnyways, " + item.getName() + " ligger nu i naturen igen";
+                "Tak fordi du puttede " + item.getName() + " tilbage i naturen"
+                :
+                "Er du sikker på, at " + item.getName() + " skal tilbage i naturen?\nAnyways, " + item.getName() + " ligger nu i naturen igen";
 
             pubSub.publish("fx_notify", String.format("%s#%s", headlineMessage, feedbackMessage));
             System.out.println(feedbackMessage);
@@ -194,15 +201,16 @@ public class Game extends worldofzuul.Game {
         else {
             Item item = itemController.getItemBySlug(itemSlug);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
-                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..?\n I hvert fald kan " + item.getName() +
-                    " kun droppes i rummet du fandt " + item.getName() + ".\nFind rummet og prøv igen!"
-                    :
-                    "God ide at putte " + item.getName() + " tilbage i naturen,\n men for at putte " + item.getName() +
-                    " tilbae i naturen,\n skal du lægge det i rummet hvor du fandt det. Tak!";
+                "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..?\n I hvert fald kan " + item.getName() +
+                " kun droppes i rummet du fandt " + item.getName() + ".\nFind rummet og prøv igen!"
+                :
+                "God ide at putte " + item.getName() + " tilbage i naturen,\n men for at putte " + item.getName() +
+                " tilbae i naturen,\n skal du lægge det i rummet hvor du fandt det. Tak!";
 
             pubSub.publish("fx_notify", String.format("%s#%s", "Du skal ind i et andet rum.", feedbackMessage));
             System.out.println(feedbackMessage);
         }
+        pubSub.publish("fx_respawnItems", true);
     }
     void dumpItems(){
         if (inventoryController.getInventory().isEmpty()){
