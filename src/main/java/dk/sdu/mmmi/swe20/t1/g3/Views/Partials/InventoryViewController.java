@@ -29,16 +29,18 @@ import java.util.stream.Collectors;
 
 public class InventoryViewController {
     @FXML
-    public StackPane itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4;
+    private StackPane itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4;
 
-    HashMap<Integer, Item> invLocation = new HashMap<>();
+    private HashMap<Integer, Item> invLocation = new HashMap<>();
 
-    PubSub pubSub = PubSub.getInstance();
-    InventoryController inventoryController = InventoryController.getInstance();
-    HashMap<Item, Long> inventory = new HashMap<>();
+    private PubSub pubSub = PubSub.getInstance();
+    private InventoryController inventoryController = InventoryController.getInstance();
+    private HashMap<Item, Long> inventory = new HashMap<>();
+
+    private boolean cooldownDrop = false;
 
     @FXML
-    GridPane InventoryGrid;
+    private GridPane InventoryGrid;
 
     @FXML
     public void initialize() {
@@ -52,11 +54,23 @@ public class InventoryViewController {
                 sp.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        if(invLocation.get(finalI) == null) return;
+                        if(invLocation.get(finalI) == null || cooldownDrop) return;
+                        cooldownDrop = true;
 
                         String targetSlug = invLocation.get(finalI).getSlug();
                         pubSub.publish("executeCommand", String.format("drop %s", targetSlug));
-                        pubSub.publish("fx_respawnItems", true);
+
+                        sp.removeEventHandler(MouseEvent.MOUSE_RELEASED, this);
+
+                        Thread task = new Thread(() -> {
+                            try {
+                                Thread.sleep(400);
+                                cooldownDrop = false;
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        task.start();
                     }
                 });
 
