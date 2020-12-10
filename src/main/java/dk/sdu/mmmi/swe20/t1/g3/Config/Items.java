@@ -53,6 +53,20 @@ public enum Items {
                     "koralrev", new SceneLocation(800, 600),
                     "klippetop", new SceneLocation(700, 430)
             ),
+        ItemAction.PICKUPABLE
+    ),
+    PLASTIKBUNKE(
+            "plastikbunke",
+            "Plastikbunkena",
+            "Views/Items/PLASTIKBUNKE.png",
+            ItemType.PLASTIC,
+            Map.of(
+                    "start", new SceneLocation(400, 360),
+                    "skibsvrag", new SceneLocation(300, 600),
+                    "koralrev", new SceneLocation(250, 450),
+                    "klippekant", new SceneLocation(150, 500),
+                    "strandv2", new SceneLocation(1000, 515)
+            ),
             ItemAction.PICKUPABLE
     ),
 
