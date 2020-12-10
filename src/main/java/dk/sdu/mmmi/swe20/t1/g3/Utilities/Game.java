@@ -212,6 +212,7 @@ public class Game extends worldofzuul.Game {
         }
         pubSub.publish("fx_respawnItems", true);
     }
+
     void dumpItems(){
         if (inventoryController.getInventory().isEmpty()){
             System.out.println("Der er ikke noget i din taske til smide ud.");

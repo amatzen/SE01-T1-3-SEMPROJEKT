@@ -118,7 +118,7 @@ public class FXAppController implements Initializable {
     }
 
     private void spawnPlayer() {
-        Player player = new Player(this,(1400/2) - 40/2, (840/2) - 70/2, 40, 70, Color.BLUE);
+        Player player = new Player(this,(1400/2) - 40/2, (840/2) - 70/2, 55, 80, Color.BLUE);
         pa = new PlayerAction(this, new PlayerActionIdenticator(player), player);
 
         Platform.runLater(() -> {
