@@ -14,10 +14,10 @@ import java.util.Map;
 
 public enum Items {
     // Pickupables
-    PLASTAFFALD(
+    SKRALD(
             "skrald",
             "Skrald",
-            "Views/Items/PLASTAFFALD.png",
+            "Views/Items/SKRALD.png",
             ItemType.TRASH,
             Map.of(
                 "start", new SceneLocation(430,560),
@@ -52,6 +52,34 @@ public enum Items {
                     "skibsvrag", new SceneLocation(1200, 700),
                     "koralrev", new SceneLocation(800, 600),
                     "klippetop", new SceneLocation(700, 430)
+            ),
+        ItemAction.PICKUPABLE
+    ),
+    PLASTIKBUNKE(
+            "plastikbunke",
+            "Plastikbunken",
+            "Views/Items/PLASTIKBUNKE.png",
+            ItemType.PLASTIC,
+            Map.of(
+                    "start", new SceneLocation(400, 360),
+                    "skibsvrag", new SceneLocation(300, 600),
+                    "koralrev", new SceneLocation(250, 450),
+                    "klippekant", new SceneLocation(150, 500),
+                    "strandv2", new SceneLocation(1000, 515)
+            ),
+            ItemAction.PICKUPABLE
+    ),
+    BLÅMUSLING(
+            "blåmusling",
+            "Blåmuslingen",
+            "Views/Items/BLÅMUSLING.png",
+            ItemType.BIO,
+            Map.of(
+                    "strand", new SceneLocation(400, 550),
+                    "skibsvrag", new SceneLocation(1200, 440),
+                    "strandv2", new SceneLocation(250, 450),
+                    "skov", new SceneLocation(1200, 300),
+                    "klippekant", new SceneLocation(800, 450)
             ),
             ItemAction.PICKUPABLE
     ),
