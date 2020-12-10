@@ -1,69 +1,78 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
-import javafx.animation.Transition;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.ImageView;
-import javafx.util.Duration;
+import java.awt.image.BufferedImage;
 
+public class SpriteAnimation {
 
-public class SpriteAnimation extends Transition {
+    private BufferedImage[] frames;
+    private int currentFrame;
+    private int numFrames;
 
+    private int count;
+    private int delay;
 
-    private final ImageView imageView;
-    private final int count;
-    private final int columns;
-    private int offsetX;
-    private int offsetY;
-    private final int width;
-    private final int height;
+    private int timesPlayed;
 
-
-    public SpriteAnimation(
-            ImageView imageView,
-            Duration duration,
-            int count,
-            int columns,
-            int offsetX,
-            int offsetY,
-            int width,
-            int height
-    ) {
-        this.imageView = imageView;
-        this.count = count;
-        this.columns = columns;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.width = width;
-        this.height = height;
-
-
-        //method
-
-        setCycleDuration(duration);
-        setCycleCount(Animation.INDEFINITE);
-        setInterpolator(Interpolator.LINEAR);
-        this.imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-
-    }
-    public  void setOffsetX(int x) {
-        this.offsetX = x;
-    }
-    public  void setOffsetY(int y) {
-        this.offsetY = y;
+    public Animation(BufferedImage[] frames) {
+        timesPlayed = 0;
+        setFrames(frames);
     }
 
-    protected void interpolate(double frac) {
-        final int index = Math.min((int)Math.floor(count*frac), count-1);
-        final int x = (index%columns)*width+offsetX;
-        final int y = (index/columns)*height+offsetY;
-        imageView.setViewport(new Rectangle2D(x , y, width, height));
+    public Animation() {
+        timesPlayed = 0;
+    }
+
+    public void setFrames(BufferedImage[] frames) {
+        this.frames = frames;
+        currentFrame = 0;
+        timesPlayed = 0;
+        delay = 2;
+        numFrames = frames.length;
+    }
+
+    public void setDelay(int i) {
+        delay = i;
+    }
+
+    public void setFrame(int i) {
+        currentFrame = i;
+    }
+
+    public void setNumFrames(int i) {
+        numFrames = i;
     }
 
 
+    public void update() {
+        if(delay == -1) return;
+
+        count++;
 
 
+        if(count == delay) {
+            currentFrame++;
+            count = 0;
+        }
+        if(currentFrame == numFrames) {
+            currentFrame = 0;
+            timesPlayed++;
+        }
+    }
 
+    public int getDelay() {
+        return delay;
+    }
+
+    public int getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public boolean hasPlayedOnce() {
+        return timesPlayed > 0; }
+
+    public boolean hasPlayed(int i) {return timesPlayed == i; }
 }
-

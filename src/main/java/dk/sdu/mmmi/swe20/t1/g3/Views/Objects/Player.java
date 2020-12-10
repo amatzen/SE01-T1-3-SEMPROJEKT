@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Player extends Sprite {
+public class Player extends Sprite // extends Enitity
+        {
     private FXAppController fxAppController = null;
     private HashMap<String, Boolean> animations = new HashMap<>();
 
@@ -102,33 +103,116 @@ public class Player extends Sprite {
         }
     }
 
-    private HashMap<KeyCode, Boolean> Keys = new HashMap<>();
-    Image image = new Image(getClass().getResourceAsStream("Character.png"));
-    ImageView imageView = new ImageView(image);
-    Character player = new Character(imageView);
 
-    public void update() {
-        if (isPressed(KeyCode.UP)) {
-            player.animation.play();
-            player.animation.setOffsetY(96);
-            player.moveY(-2);
-        }else if (keys.isDown(KeyCode.DOWN) || keys.isDown(KeyCode.S)) {
-            player.animation.play();
-            player..setOffsetY(96);
-            player.moveY(2);
-        }else if (keys.isDown(KeyCode.RIGHT) || keys.isDown(KeyCode.D)) {
-            player.animation.play();
-            player.animation.setOffsetY(96);
-            player.moveX(2);
-        }else if (keys.isDown(KeyCode.LEFT) || keys.isDown(KeyCode.A)) {
-            player.animation.play();
-            player.animation.setOffsetY(96)
-            player.moveY(-2);
+public Player(Sprite sprite, Vector2f origin, int size) {
+        super(sprite, origin, size); }
+
+        public void move() {
+            if (up) {
+                dy -= acc;
+                if (dy < -maxSpeed) {
+                    dy = -maxSpeed;
+                }
+            } else {
+                if (dy < 0) {
+                    dy += deacc;
+                    if (dy > 0) {
+                        dy = 0;
+                    }
+                }
+            }
+
+            if (down) {
+                dy += acc;
+                if (dy < maxSpeed) {
+                    dy = maxSpeed;
+                }
+            } else {
+                if (dy > 0) {
+                    dy -= deacc;
+                    if (dy < 0) {
+                        dy = 0;
+                    }
+                }
+            }
+
+            if (left) {
+                dx -= acc;
+                if (dx < -maxSpeed) {
+                    dx = -maxSpeed;
+                }
+            } else {
+                if (dx < 0) {
+                    dx += deacc;
+                    if (dx > 0) {
+                        dx = 0;
+                    }
+                }
+            }
+
+            if (right) {
+                dx += acc;
+                if (dx > maxSpeed) {
+                    dx = maxSpeed;
+                }
+            } else {
+                if (dx > 0) {
+                    dx -= deacc;
+                    if (dx < 0) {
+                        dx = 0;
+                    }
+                }
+            }
         }
-        else {
-            player.animation.stop();
+
+        public void update() {
+            super.update();
+            move();
+            pos.x += dx;
+            pos.y += dy;
         }
+
+
+        @override
+        public void render(Graphics2D) {
+                g.drawImage(ani.getImage(), (int) (pos.x), (int) (pos.y), size, size, null)
+        }
+
     }
 
+    public void input(MouseHandler mouse, KeyHandler key) {
 
+        if(mouse.getButton()== 1) {
+            System.out.println("Player:" + pos.x + "," + pos.y);
+        }
+
+        if (key.up.down) {
+            up = true;
+        } else {
+            up = false;
+        }
+        if (key.down.down) {
+            down = true;
+        } else {
+            down = false;
+
+            if (key.left.down) {
+                left = true;
+            } else {
+                left = false;
+
+                if (key.right.down) {
+                    right = true;
+                } else {
+                    right = false;
+                }
+                if (key.attack.down) {
+                    attack = true;
+                } else {
+                    attack = false;
+                }
+
+            }
+        }
+    }
 }
