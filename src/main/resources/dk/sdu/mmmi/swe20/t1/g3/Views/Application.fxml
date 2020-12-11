@@ -13,13 +13,13 @@
                     AnchorPane.topAnchor="0.0"/>
         <AnchorPane fx:id="UI_GameInformation" prefHeight="900.0" prefWidth="1400.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"></AnchorPane>
         <fx:include
-                fx:id="UI_Inventory"
-                source="Partials/inventory.fxml"
+                fx:id="UI_Compass"
+                source="Partials/compass.fxml"
                 AnchorPane.bottomAnchor="0.0"
         />
         <fx:include
-                fx:id="UI_Compass"
-                source="Partials/compass.fxml"
+                fx:id="UI_Inventory"
+                source="Partials/inventory.fxml"
                 AnchorPane.bottomAnchor="0.0"
         />
         <Text fx:id="UI_SceneLabel" fill="WHITE" layoutX="31.0" layoutY="840.0" stroke="#444444" strokeType="OUTSIDE" text="Text">
