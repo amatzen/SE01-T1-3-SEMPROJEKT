@@ -1,8 +1,11 @@
 package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 
+import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Main;
+import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
 import dk.sdu.mmmi.swe20.t1.g3.Views.FXAppController;
+import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -34,6 +37,7 @@ public class Player extends Sprite {
     private double centerX, centerY = 0;
     private boolean isWalking = false;
     private boolean isWalkingLeft = false;
+    private boolean isInWater = false;
     private int spriteIncrement = 0;
 
     public Player(FXAppController appController, int x, int y, int w, int h, Color color) {
@@ -91,10 +95,30 @@ public class Player extends Sprite {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
             spriteIncrement++;
             if (spriteIncrement > 5) spriteIncrement = 0;
-            setPlayerSprite(String.format("Views/Assets/Player/%s/%s.png", isWalking ? "Walking" : "Idling", spriteIncrement));
+            if(isInWater)
+                setPlayerSprite(String.format("Views/Assets/Player/%s_Water/%s.png", isWalking ? "Walking" : "Idling", spriteIncrement));
+            else
+                setPlayerSprite(String.format("Views/Assets/Player/%s/%s.png", isWalking ? "Walking" : "Idling", spriteIncrement));
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        PubSub.getInstance().addListener("fx_sceneChanged", (type, object) -> {
+            Scene s = SceneController.getInstance().getSceneBySlug((String) object);
+
+            switch (s.getSlug()) {
+                case "hav":
+                case "koralrev":
+                case "skibsvrag":
+                case "klippekant":
+                case "klippetop":
+                case "havv2":
+                    setInWater(true);
+                    break;
+                default:
+                    setInWater(false);
+            }
+        });
     }
 
     private boolean getAnimation(String s) {
@@ -141,4 +165,7 @@ public class Player extends Sprite {
 
     }
 
+    public void setInWater(boolean inWater) {
+        isInWater = inWater;
+    }
 }
