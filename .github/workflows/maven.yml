@@ -43,13 +43,13 @@ jobs:
           args: unzip -qq libs/win/openjdk-15.0.0.1_windows-x64_bin.zip -d libs/win
       
     - name: Extract Tarball for Mac
-      run: tar -czvf libs/mac/openjdk-15.0.1_osx-x64_bin.tar.gz libs/mac
+      run: tar -czvf libs/mac/openjdk-15.0.1_osx-x64_bin.tar.gz -C libs/mac
 
     - name: Copy JDKs into staging
       run: cp -vr libs staging
 
     - name: Copy Static into Staging
-      run: cp -vr static staging
+      run: cp -vr static/* staging
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
