@@ -17,7 +17,7 @@ public enum Items {
             ItemType.TRASH,
             Map.of(
                 "start", new SceneLocation(430,560),
-                "skov", new SceneLocation(800,500),
+                "strandindgang", new SceneLocation(800,500),
                 "strandv2", new SceneLocation(600, 100),
                 "klippekant", new SceneLocation(200,600)
             ),
@@ -74,7 +74,7 @@ public enum Items {
                 "strand", new SceneLocation(400, 550),
                 "skibsvrag", new SceneLocation(1200, 440),
                 "strandv2", new SceneLocation(250, 450),
-                "skov", new SceneLocation(1200, 300),
+                "strandindgang", new SceneLocation(1200, 300),
                 "klippekant", new SceneLocation(800, 450)
             ),
             ItemAction.PICKUPABLE
