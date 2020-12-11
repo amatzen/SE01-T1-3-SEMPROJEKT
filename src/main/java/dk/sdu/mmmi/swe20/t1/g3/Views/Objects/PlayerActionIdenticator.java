@@ -3,7 +3,6 @@ package dk.sdu.mmmi.swe20.t1.g3.Views.Objects;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -13,7 +12,7 @@ public class PlayerActionIdenticator {
     private boolean shown = false;
     private String text = "";
 
-    private StackPane view;
+    private final StackPane view;
 
     public PlayerActionIdenticator(Player p) {
         x = p.getBoundsInParent().getMaxX() + 10;

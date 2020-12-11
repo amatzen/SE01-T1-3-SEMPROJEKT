@@ -3,11 +3,9 @@ package dk.sdu.mmmi.swe20.t1.g3.Views.Partials;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Main;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
-import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneItem;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +20,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 // <!-- layoutX="483.0" layoutY="825.0" -->
@@ -31,10 +28,10 @@ public class InventoryViewController {
     @FXML
     private StackPane itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4;
 
-    private HashMap<Integer, Item> invLocation = new HashMap<>();
+    private final HashMap<Integer, Item> invLocation = new HashMap<>();
 
-    private PubSub pubSub = PubSub.getInstance();
-    private InventoryController inventoryController = InventoryController.getInstance();
+    private final PubSub pubSub = PubSub.getInstance();
+    private final InventoryController inventoryController = InventoryController.getInstance();
     private HashMap<Item, Long> inventory = new HashMap<>();
 
     private boolean cooldownDrop = false;
@@ -48,13 +45,13 @@ public class InventoryViewController {
             updateInventory();
 
             int i = 0;
-            for ( StackPane sp : new StackPane[] { itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4 }) {
+            for (StackPane sp : new StackPane[]{itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4}) {
                 int finalI = i;
 
                 sp.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        if(invLocation.get(finalI) == null || cooldownDrop) return;
+                        if (invLocation.get(finalI) == null || cooldownDrop) return;
                         cooldownDrop = true;
 
                         String targetSlug = invLocation.get(finalI).getSlug();
@@ -75,7 +72,7 @@ public class InventoryViewController {
                 });
 
                 i++;
-            };
+            }
         });
 
         /*
@@ -97,7 +94,7 @@ public class InventoryViewController {
 
     private void updateInventory() {
         invLocation.clear();
-        for (StackPane currentSlot : new StackPane[] { itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4 }) {
+        for (StackPane currentSlot : new StackPane[]{itemSlot_0, itemSlot_1, itemSlot_2, itemSlot_3, itemSlot_4}) {
             currentSlot.getChildren().get(0).getStyleClass().remove("inventoryField-filled");
             ((Rectangle) currentSlot.getChildren().get(1)).setFill(Color.TRANSPARENT);
             ((Text) ((StackPane) currentSlot.getChildren().get(2)).getChildren().get(1)).setText("0");
@@ -108,8 +105,8 @@ public class InventoryViewController {
         ArrayList<SceneItem> inputInventory = inventoryController.getInventory();
 
         inventory = new HashMap<>(
-            inputInventory.stream()
-                .collect(Collectors.groupingBy(SceneItem::getItem, Collectors.counting()))
+                inputInventory.stream()
+                        .collect(Collectors.groupingBy(SceneItem::getItem, Collectors.counting()))
         );
         inventory.forEach((key, value) -> {
             boolean itemAlreadyInSlot = itemInSlot(key);
@@ -126,7 +123,7 @@ public class InventoryViewController {
             };
 
             try {
-                if ( !itemAlreadyInSlot ) {
+                if (!itemAlreadyInSlot) {
                     assert currentSlot != null;
                     currentSlot.getChildren().get(0).getStyleClass().add("inventoryField-filled");
 

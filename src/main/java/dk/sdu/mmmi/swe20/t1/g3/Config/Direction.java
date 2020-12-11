@@ -6,10 +6,13 @@ public enum Direction {
     LEFT("venstre"),
     RIGHT("højre");
 
-    private String directionString;
+    private final String directionString;
+
     Direction(String directionString) {
         this.directionString = directionString;
     }
 
-    public String getDirectionString() { return directionString; }
+    public String getDirectionString() {
+        return directionString;
+    }
 }

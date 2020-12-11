@@ -4,21 +4,38 @@ import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
-import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Scene.
+ */
 public class Scene extends worldofzuul.Room {
+    /**
+     * The Slug.
+     */
     public String slug; // Utrolig kort, alfanumerisk ID
+    /**
+     * The Name.
+     */
     public String name; // Navnet på scenen, bruges til identifikation mellem scener.
-    private String sceneURL;
-    private HashMap<String, String> exitsString;
+    private final String sceneURL;
+    private final HashMap<String, String> exitsString;
     private HashMap<String, Scene> exits;
 
-    // Constructor without any particular options / games
+    /**
+     * Instantiates a new Scene.
+     *
+     * @param slug        the slug
+     * @param name        the name
+     * @param description the description
+     * @param sceneURL    the scene url
+     * @param exits       the exits
+     */
+// Constructor without any particular options / games
     public Scene(String slug, String name, String description, String sceneURL, Map<String, String> exits) {
         super(description);
         this.name = name;
@@ -27,6 +44,9 @@ public class Scene extends worldofzuul.Room {
         this.exitsString = new HashMap<String, String>(exits);
     }
 
+    /**
+     * Display scene.
+     */
     public void displayScene() {
         System.out.printf("======== %s ========\n", this.slug.toUpperCase());
         System.out.println(this.getDescription());
@@ -37,11 +57,11 @@ public class Scene extends worldofzuul.Room {
         ArrayList<Item> items = itemController.getItemsByScene(this);
         ArrayList<Item> itemsNotPickedUp = new ArrayList<Item>(items.stream().filter(x -> !inventoryController.containsRoomItem(this, x)).collect(Collectors.toList()));
 
-        if(itemsNotPickedUp.size() > 0) {
-            System.out.println("");
+        if (itemsNotPickedUp.size() > 0) {
+            System.out.println();
             System.out.println("I dette rum ser du:");
-            for (Item item: itemsNotPickedUp) {
-                System.out.println(item.getName() + (item.getItemAction() == ItemAction.INTERACTABLE ?" (Kan ikke samles op)" : ""));
+            for (Item item : itemsNotPickedUp) {
+                System.out.println(item.getName() + (item.getItemAction() == ItemAction.INTERACTABLE ? " (Kan ikke samles op)" : ""));
             }
         }
 
@@ -59,16 +79,47 @@ public class Scene extends worldofzuul.Room {
         System.out.println();
     }
 
-    // Getters
+    /**
+     * Gets slug.
+     *
+     * @return the slug
+     */
     public String getSlug() {
         return slug;
     }
+
+    /**
+     * Gets exits string.
+     *
+     * @return the exits string
+     */
     public HashMap<String, String> getExitsString() {
         return exitsString;
     }
-    public String getDescription() { return super.getShortDescription(); }
-    public String getName() { return name; }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
+        return super.getShortDescription();
+    }
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets scene url.
+     *
+     * @return the scene url
+     */
     public String getSceneURL() {
         return sceneURL;
     }
@@ -78,7 +129,12 @@ public class Scene extends worldofzuul.Room {
         return this.exits.get(direction);
     }
 
-    // Setters
+    /**
+     * Sets exits.
+     *
+     * @param exits the exits
+     */
+// Setters
     public void setExits(HashMap<String, Scene> exits) {
         this.exits = exits;
     }

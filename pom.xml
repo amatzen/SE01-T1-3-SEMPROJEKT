@@ -19,7 +19,7 @@
         <javafx.fxml.version>14</javafx.fxml.version>
         <rx.java.version>3.0.7</rx.java.version>
 
-        <main.class>Main</main.class>
+        <main.class>worldoffish.Main</main.class>
     </properties>
 
     <dependencies>

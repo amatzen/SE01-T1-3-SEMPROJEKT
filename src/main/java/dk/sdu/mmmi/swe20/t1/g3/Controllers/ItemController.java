@@ -10,8 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Item controller.
+ */
 public class ItemController {
-    // Singleton Pattern Declaration
+    /**
+     * The constant instance.
+     */
+// Singleton Pattern Declaration
     public static ItemController instance = null;
     private final ArrayList<Item> items = new ArrayList<Item>();
     // End Singleton Pattern Declaration
@@ -26,11 +32,22 @@ public class ItemController {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ItemController getInstance() {
         if (instance == null) instance = new ItemController();
         return instance;
     }
 
+    /**
+     * Remove scene from item.
+     *
+     * @param item  the item
+     * @param scene the scene
+     */
     public void removeSceneFromItem(Item item, Scene scene) {
         HashMap<Scene, SceneLocation> initialSpawns = item.getSpawns();
         HashMap<Scene, SceneLocation> newSpawns = new HashMap<>();
@@ -44,10 +61,22 @@ public class ItemController {
         item.setSpawns(newSpawns);
     }
 
+    /**
+     * Gets items by scene.
+     *
+     * @param slug the slug
+     * @return the items by scene
+     */
     public ArrayList<Item> getItemsByScene(String slug) {
         return getItemsByScene(SceneController.getInstance().getSceneBySlug(slug));
     }
 
+    /**
+     * Gets items by scene.
+     *
+     * @param scene the scene
+     * @return the items by scene
+     */
     public ArrayList<Item> getItemsByScene(Scene scene) {
         ArrayList<Item> itemsInScene = new ArrayList<Item>();
 
@@ -62,6 +91,13 @@ public class ItemController {
         return itemsInScene;
     }
 
+    /**
+     * Has item boolean.
+     *
+     * @param sceneSlug the scene slug
+     * @param itemSlug  the item slug
+     * @return the boolean
+     */
     public boolean hasItem(String sceneSlug, String itemSlug) {
         boolean hasItem = false;
 
@@ -75,10 +111,23 @@ public class ItemController {
         return hasItem;
     }
 
+    /**
+     * Has item boolean.
+     *
+     * @param scene    the scene
+     * @param itemSlug the item slug
+     * @return the boolean
+     */
     public boolean hasItem(Scene scene, String itemSlug) {
         return hasItem(scene.getSlug(), itemSlug);
     }
 
+    /**
+     * Gets item by slug.
+     *
+     * @param slug the slug
+     * @return the item by slug
+     */
     public Item getItemBySlug(String slug) {
         return items.stream().filter(x -> x.getSlug().equals(slug)).findFirst().orElse(null);
     }

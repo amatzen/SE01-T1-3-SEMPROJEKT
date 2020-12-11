@@ -58,7 +58,7 @@ public enum Scenes {
             "Velkommen til havet!",
             "Views/Scenes/09_HAVOVERFLADE_MED_BRO.png",
             Map.of(
-                    DOWN,"koralrev",
+                    DOWN, "koralrev",
                     RIGHT, "havv2",
                     LEFT, "strand"
             )
@@ -93,7 +93,7 @@ public enum Scenes {
             Map.of(
                     UP, "havv2",
                     LEFT, "koralrev",
-                    RIGHT,"klippekant"
+                    RIGHT, "klippekant"
             )
     ),
 
@@ -119,10 +119,12 @@ public enum Scenes {
     );
 
 
-
-    private String slug, name, description, fxmlScene;
-    private Map<String, String> exits;
-    private String sceneURL;
+    private final String slug;
+    private final String name;
+    private final String description;
+    private String fxmlScene;
+    private final Map<String, String> exits;
+    private final String sceneURL;
 
     Scenes(String slug, String name, String description, String sceneURL, Map<Direction, String> exits) {
         this.slug = slug;
@@ -130,8 +132,8 @@ public enum Scenes {
         this.description = description;
         this.sceneURL = sceneURL;
         this.exits = exits.entrySet().stream()
-            .collect(Collectors.toMap(e->e.getKey().getDirectionString(), Map.Entry::getValue));
-    };
+                .collect(Collectors.toMap(e -> e.getKey().getDirectionString(), Map.Entry::getValue));
+    }
 
     public String getSlug() {
         return slug;
@@ -149,5 +151,7 @@ public enum Scenes {
         return exits;
     }
 
-    public String getSceneURL() { return sceneURL; }
+    public String getSceneURL() {
+        return sceneURL;
+    }
 }

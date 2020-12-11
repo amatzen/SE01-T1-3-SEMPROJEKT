@@ -16,10 +16,10 @@ public enum Items {
             "Views/Items/SKRALD.png",
             ItemType.TRASH,
             Map.of(
-                "start", new SceneLocation(430,560),
-                "strandindgang", new SceneLocation(800,500),
-                "strandv2", new SceneLocation(600, 100),
-                "klippekant", new SceneLocation(200,600)
+                    "start", new SceneLocation(430, 560),
+                    "strandindgang", new SceneLocation(800, 500),
+                    "strandv2", new SceneLocation(600, 100),
+                    "klippekant", new SceneLocation(200, 600)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -29,11 +29,11 @@ public enum Items {
             "Views/Items/TANG.png",
             ItemType.BIO,
             Map.of(
-                "strand", new SceneLocation(500,300),
-                "koralrev", new SceneLocation(250, 600),
-                "skibsvrag", new SceneLocation(200, 600),
-                "klippekant", new SceneLocation(500, 600),
-                "strandv2", new SceneLocation(790, 600)
+                    "strand", new SceneLocation(500, 300),
+                    "koralrev", new SceneLocation(250, 600),
+                    "skibsvrag", new SceneLocation(200, 600),
+                    "klippekant", new SceneLocation(500, 600),
+                    "strandv2", new SceneLocation(790, 600)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -43,13 +43,13 @@ public enum Items {
             "Views/Items/PLASTIKFLASKE.png",
             ItemType.PLASTIC,
             Map.of(
-                "hav", new SceneLocation(400, 360),
-                "klippekant", new SceneLocation(800, 600),
-                "skibsvrag", new SceneLocation(1200, 700),
-                "koralrev", new SceneLocation(800, 600),
-                "klippetop", new SceneLocation(700, 430)
+                    "hav", new SceneLocation(400, 360),
+                    "klippekant", new SceneLocation(800, 600),
+                    "skibsvrag", new SceneLocation(1200, 700),
+                    "koralrev", new SceneLocation(800, 600),
+                    "klippetop", new SceneLocation(700, 430)
             ),
-        ItemAction.PICKUPABLE
+            ItemAction.PICKUPABLE
     ),
     PLASTIKBUNKE(
             "plastikbunke",
@@ -57,11 +57,11 @@ public enum Items {
             "Views/Items/PLASTIKBUNKE.png",
             ItemType.PLASTIC,
             Map.of(
-                "start", new SceneLocation(400, 360),
-                "skibsvrag", new SceneLocation(300, 600),
-                "koralrev", new SceneLocation(250, 450),
-                "klippekant", new SceneLocation(150, 500),
-                "strandv2", new SceneLocation(1000, 515)
+                    "start", new SceneLocation(400, 360),
+                    "skibsvrag", new SceneLocation(300, 600),
+                    "koralrev", new SceneLocation(250, 450),
+                    "klippekant", new SceneLocation(150, 500),
+                    "strandv2", new SceneLocation(1000, 515)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -71,11 +71,11 @@ public enum Items {
             "Views/Items/BLÅMUSLING.png",
             ItemType.BIO,
             Map.of(
-                "strand", new SceneLocation(400, 550),
-                "skibsvrag", new SceneLocation(1200, 440),
-                "strandv2", new SceneLocation(250, 450),
-                "strandindgang", new SceneLocation(1200, 300),
-                "klippekant", new SceneLocation(800, 450)
+                    "strand", new SceneLocation(400, 550),
+                    "skibsvrag", new SceneLocation(1200, 440),
+                    "strandv2", new SceneLocation(250, 450),
+                    "strandindgang", new SceneLocation(1200, 300),
+                    "klippekant", new SceneLocation(800, 450)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -87,33 +87,37 @@ public enum Items {
             "Views/Items/SKRALDESPAND.png",
             ItemType.INTERACTABLE,
             Map.of(
-                "start", new SceneLocation(600, 200)
+                    "start", new SceneLocation(600, 200)
             ),
             ItemAction.INTERACTABLE,
             () -> {
-                PubSub.getInstance().publish("executeCommand","dump");
+                PubSub.getInstance().publish("executeCommand", "dump");
             }
     );
 
-    private String slug, name, texture;
-    private ItemType itemType;
-    private HashMap<String, SceneLocation> spawns;
-    private ItemAction itemAction;
+    private final String slug;
+    private final String name;
+    private final String texture;
+    private final ItemType itemType;
+    private final HashMap<String, SceneLocation> spawns;
+    private final ItemAction itemAction;
     private Runnable runnable;
+
     Items(String slug, String name, String texture, ItemType itemType, Map<String, SceneLocation> spawns, ItemAction itemAction) {
         this.slug = slug;
         this.name = name;
         this.texture = texture;
         this.itemType = itemType;
-        this.spawns = new HashMap<String, SceneLocation>( spawns );
+        this.spawns = new HashMap<String, SceneLocation>(spawns);
         this.itemAction = itemAction;
     }
+
     Items(String slug, String name, String texture, ItemType itemType, Map<String, SceneLocation> spawns, ItemAction itemAction, Runnable runnable) {
         this.slug = slug;
         this.name = name;
         this.texture = texture;
         this.itemType = itemType;
-        this.spawns = new HashMap<String, SceneLocation>( spawns );
+        this.spawns = new HashMap<String, SceneLocation>(spawns);
         this.itemAction = itemAction;
         this.runnable = runnable;
     }

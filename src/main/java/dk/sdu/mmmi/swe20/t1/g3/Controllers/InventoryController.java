@@ -14,9 +14,9 @@ public class InventoryController {
 
     // Singleton Pattern Declaration
     public static InventoryController instance = null;
-    PubSub pubSub = PubSub.getInstance();
     // End Singleton Pattern Declaration
     private final ArrayList<SceneItem> inventory = new ArrayList<>();
+    PubSub pubSub = PubSub.getInstance();
 
     private InventoryController() {
     }

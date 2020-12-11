@@ -19,6 +19,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+/**
+ * The type Game.
+ */
 public class Game extends worldofzuul.Game {
     private final SceneController sceneController = SceneController.getInstance();
     private final ItemController itemController = ItemController.getInstance();
@@ -27,14 +30,18 @@ public class Game extends worldofzuul.Game {
 
     private final Parser parser = new dk.sdu.mmmi.swe20.t1.g3.Utilities.Parser();
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param startScene the start scene
+     */
     public Game(String startScene) {
         sceneController.goToScene(startScene);
         sceneController.getCurrentScene().displayScene();
 
     }
 
-    protected boolean processCommand(Command command)
-    {
+    protected boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
@@ -48,7 +55,7 @@ public class Game extends worldofzuul.Game {
             case GO -> goRoom(command);
             case PICKUP -> pickupItem(command);
             case INVENTORY -> printInventory();
-            case INTERACT ->  interactWithItem(command);
+            case INTERACT -> interactWithItem(command);
             case HELP -> printHelp();
             case DUMP -> dumpItems();
             case QUIT -> wantToQuit = quit(command);
@@ -84,7 +91,7 @@ public class Game extends worldofzuul.Game {
 
     @Override
     public void goRoom(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             System.out.println("Hvor vil du gå hen?");
             return;
         }
@@ -96,13 +103,11 @@ public class Game extends worldofzuul.Game {
         if (nextScene == null) {
             System.out.println("Ingen dør!");
             pubSub.publish("fx_notify", "Ingen dør#Ingen dør fundet!");
-        }
-        else {
+        } else {
             try {
                 sceneController.goToScene(nextScene);
                 sceneController.getCurrentScene().displayScene();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Der skete en fejl!");
                 System.out.println(e.getMessage());
                 e.printStackTrace();
@@ -110,10 +115,18 @@ public class Game extends worldofzuul.Game {
         }
     }
 
+    /**
+     * Print inventory.
+     */
     void printInventory() {
         InventoryController.getInstance().printInventory();
     }
 
+    /**
+     * Interact with item.
+     *
+     * @param command the command
+     */
     void interactWithItem(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Hvad skal jeg gøre?");
@@ -131,8 +144,13 @@ public class Game extends worldofzuul.Game {
         }
     }
 
+    /**
+     * Pickup item.
+     *
+     * @param command the command
+     */
     void pickupItem(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             System.out.println("Hvad skal jeg samle op?");
             return;
         }
@@ -146,16 +164,16 @@ public class Game extends worldofzuul.Game {
         ArrayList<Item> items = itemController.getItemsByScene(sceneController.getCurrentScene());
         ArrayList<Item> itemsNotPickedUp = new ArrayList<Item>(items.stream().filter(x -> !inventoryController.containsRoomItem(sceneController.getCurrentScene(), x)).collect(Collectors.toList()));
 
-        if(
-            itemController.hasItem(currentScene, itemSlug)  &&
-            itemsNotPickedUp.contains(itemController.getItemBySlug(itemSlug)) &&
-            itemController.getItemBySlug(itemSlug).getItemAction() == ItemAction.PICKUPABLE
+        if (
+                itemController.hasItem(currentScene, itemSlug) &&
+                        itemsNotPickedUp.contains(itemController.getItemBySlug(itemSlug)) &&
+                        itemController.getItemBySlug(itemSlug).getItemAction() == ItemAction.PICKUPABLE
         ) {
 
             Item item = itemController.getItemBySlug(itemSlug);
             inventoryController.addToInventory(item, currentScene);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
-                    "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!\nSmid affaldet ud i skraldespanden hvor du startede, når du har fundet det hele!\nSammen kan vi redde livet i havet"
+                    "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!\nSmid affaldet ud i skraldespanden\nhvor du startede, når du har fundet det hele!\nSammen kan vi redde livet i havet"
                     :
                     "Er du sikker på, at " + item.getName() + " ikke hører til i naturen?\nAnyways, " + item.getName() + " ligger nu i dit inventory!";
             pubSub.publish("fx_notify", String.format("Ting samlet op#%s", feedbackMessage));
@@ -169,6 +187,11 @@ public class Game extends worldofzuul.Game {
 
     }
 
+    /**
+     * Drop item.
+     *
+     * @param command the command
+     */
     void dropItem(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Hvad skal jeg lægge tilbage?");
@@ -177,14 +200,14 @@ public class Game extends worldofzuul.Game {
         String itemSlug = command.getSecondWord();
         Scene currentScene = sceneController.getCurrentScene();
 
-        if(
-            !itemController.hasItem(currentScene, itemSlug)
+        if (
+                !itemController.hasItem(currentScene, itemSlug)
         ) {
             System.out.println("Kunne ikke smide tingen væk, vil du prøve igen?");
             return;
         }
 
-        if(inventoryController.containsRoomItem(currentScene,
+        if (inventoryController.containsRoomItem(currentScene,
                 itemController.getItemBySlug(command.getSecondWord()))) {
             Item item = itemController.getItemBySlug(itemSlug);
             inventoryController.dropItemFromInventory(item, currentScene);
@@ -193,21 +216,20 @@ public class Game extends worldofzuul.Game {
                     :
                     "Er du nu helt sikker?";
             String feedbackMessage = item.getItemType() == ItemType.BIO ?
-                "Tak fordi du puttede " + item.getName() + " tilbage i naturen"
-                :
-                "Er du sikker på, at " + item.getName() + " skal tilbage i naturen?\nAnyways, " + item.getName() + " ligger nu i naturen igen";
+                    "Tak fordi du puttede " + item.getName() + " tilbage i naturen"
+                    :
+                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen?\nAnyways, " + item.getName() + " ligger nu i naturen igen";
 
             pubSub.publish("fx_notify", String.format("%s#%s", headlineMessage, feedbackMessage));
             System.out.println(feedbackMessage);
-        }
-        else {
+        } else {
             Item item = itemController.getItemBySlug(itemSlug);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
-                "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..?\n I hvert fald kan " + item.getName() +
-                " kun droppes i rummet du fandt " + item.getName() + ".\nFind rummet og prøv igen!"
-                :
-                "God ide at putte " + item.getName() + " tilbage i naturen,\n men for at putte " + item.getName() +
-                " tilbae i naturen,\n skal du lægge det i rummet hvor du fandt det. Tak!";
+                    "Er du sikker på, at " + item.getName() + " skal tilbage i naturen..?\n I hvert fald kan " + item.getName() +
+                            " \nkun droppes i rummet du fandt " + item.getName() + ".\nFind rummet og prøv igen!"
+                    :
+                    "God ide at putte " + item.getName() + " tilbage i naturen,\n men for at putte " + item.getName() +
+                            " \ntilbae i naturen,\n skal du lægge det i rummet hvor du fandt det. Tak!";
 
             pubSub.publish("fx_notify", String.format("%s#%s", "Du skal ind i et andet rum.", feedbackMessage));
             System.out.println(feedbackMessage);
@@ -215,8 +237,11 @@ public class Game extends worldofzuul.Game {
         pubSub.publish("fx_respawnItems", true);
     }
 
-    void dumpItems(){
-        if (inventoryController.getInventory().isEmpty()){
+    /**
+     * Dump items.
+     */
+    void dumpItems() {
+        if (inventoryController.getInventory().isEmpty()) {
             System.out.println("Der er ikke noget i din taske til smide ud.");
             pubSub.publish("fx_notify", "Kunne ikke tømme tasken#Der er ikke noget i din taske til at smide ud.");
             return;
@@ -238,7 +263,7 @@ public class Game extends worldofzuul.Game {
         } else {
             inventoryController.dumpInventory();
 
-            System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
+            System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket ikke skal smides ud.\nNu er alt skraldet kommet tilbage i naturen, prøv igen.");
             pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket\n ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
         }
 
@@ -248,19 +273,22 @@ public class Game extends worldofzuul.Game {
             ArrayList<Item> items = itemController.getItemsByScene(s);
 
             for (Item item : items) {
-                if(item.getItemType() != ItemType.BIO && item.getItemType() != ItemType.INTERACTABLE) {
+                if (item.getItemType() != ItemType.BIO && item.getItemType() != ItemType.INTERACTABLE) {
                     noNonBioItemsLeft = false;
                 }
             }
         }
 
-        if(noNonBioItemsLeft) {
+        if (noNonBioItemsLeft) {
             System.out.printf("Yees!");
             pubSub.publish("gameFinished", true);
         }
 
     }
 
+    /**
+     * Print help.
+     */
     public void printHelp() {
         System.out.println("I World of Fish skal du bidrage til miljøet.");
         System.out.println("Spillet er opdelt i forskellige rum, hvor der er ting du skal samle op. Det handler om at samle de ting op, der ikke høre til i naturen.");

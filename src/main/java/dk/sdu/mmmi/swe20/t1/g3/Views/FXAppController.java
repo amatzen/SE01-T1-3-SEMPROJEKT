@@ -13,14 +13,10 @@ import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerActionIdenticator;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -28,7 +24,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
-import java.awt.*;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -102,11 +97,11 @@ public class FXAppController implements Initializable {
             Platform.runLater(() -> {
                 try {
                     Notifications.create()
-                        .darkStyle()
-                        .title(formatted[0])
-                        .text(formatted[1])
-                        .hideAfter(Duration.seconds(5))
-                        .show();
+                            .darkStyle()
+                            .title(formatted[0])
+                            .text(formatted[1])
+                            .hideAfter(Duration.seconds(5))
+                            .show();
                 } catch (Exception e) {
                     // Nothing
                 }
@@ -135,7 +130,7 @@ public class FXAppController implements Initializable {
     }
 
     private void spawnPlayer() {
-        Player player = new Player(this,(1400/2) - 40/2, (840/2) - 70/2, 55, 80, Color.BLUE);
+        Player player = new Player(this, (1400 / 2) - 40 / 2, (840 / 2) - 70 / 2, 55, 80, Color.BLUE);
         pa = new PlayerAction(this, new PlayerActionIdenticator(player), player);
 
         Platform.runLater(() -> {
@@ -170,9 +165,9 @@ public class FXAppController implements Initializable {
     private void onSceneChange(Object payload) {
         Scene s = sceneController.getSceneBySlug((String) payload);
 
-        Platform.runLater(() ->  {
+        Platform.runLater(() -> {
             // Set background
-            if(s.getSceneURL() != "") {
+            if (s.getSceneURL() != "") {
                 GameWindow.setStyle("-fx-background-color: #fff;");
 
                 Rectangle backdrop = new Rectangle(1400, 900);
@@ -215,6 +210,7 @@ public class FXAppController implements Initializable {
     public ArrayList<Item> getItemsSpawnedObj() {
         return itemsSpawnedObj;
     }
+
     public ArrayList<Rectangle> getItemsSpawned() {
         return itemsSpawned;
     }
@@ -247,7 +243,7 @@ public class FXAppController implements Initializable {
             for (Item item : itemsNotPickedUp) {
 
                 SceneLocation pos = item.getSpawns().get(s);
-                if(pos.getX() == 0 && pos.getY() == 0) continue;
+                if (pos.getX() == 0 && pos.getY() == 0) continue;
 
                 Rectangle box = new Rectangle();
                 box.setX(pos.getX());

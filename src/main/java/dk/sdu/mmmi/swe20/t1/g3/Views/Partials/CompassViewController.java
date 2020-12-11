@@ -28,20 +28,16 @@ public class CompassViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Arrow_Down  .setFill(Color.TRANSPARENT);
-        Arrow_Left  .setFill(Color.TRANSPARENT);
-        Arrow_Right .setFill(Color.TRANSPARENT);
-        Arrow_Up    .setFill(Color.TRANSPARENT);
+        Arrow_Down.setFill(Color.TRANSPARENT);
+        Arrow_Left.setFill(Color.TRANSPARENT);
+        Arrow_Right.setFill(Color.TRANSPARENT);
+        Arrow_Up.setFill(Color.TRANSPARENT);
 
         PubSub.getInstance().addListener("fx_sceneChanged", (type, object) -> {
             Scene s = SceneController.getInstance().getSceneBySlug((String) object);
 
             for (Direction d : Direction.values()) {
-                if(s.getExit(d.getDirectionString()) == null) {
-                    setArrow(d, false);
-                } else {
-                    setArrow(d, true);
-                }
+                setArrow(d, s.getExit(d.getDirectionString()) != null);
             }
 
         });
@@ -51,15 +47,15 @@ public class CompassViewController implements Initializable {
         SVGPath modifier = null;
 
         switch (dir) {
-            case UP     -> modifier  = Arrow_Up;
-            case DOWN   -> modifier  = Arrow_Down;
-            case LEFT   -> modifier  = Arrow_Left;
-            case RIGHT  -> modifier  = Arrow_Right;
+            case UP -> modifier = Arrow_Up;
+            case DOWN -> modifier = Arrow_Down;
+            case LEFT -> modifier = Arrow_Left;
+            case RIGHT -> modifier = Arrow_Right;
         }
 
         if (modifier == null) return;
 
-        if(show) {
+        if (show) {
             modifier.setFill(Color.WHITE);
             modifier.setStroke(Color.GRAY);
         } else {
