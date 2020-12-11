@@ -1,0 +1,2 @@
+echo hej
+pause
