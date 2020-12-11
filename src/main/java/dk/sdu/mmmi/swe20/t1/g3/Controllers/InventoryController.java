@@ -14,17 +14,17 @@ public class InventoryController {
 
     // Singleton Pattern Declaration
     public static InventoryController instance = null;
+    PubSub pubSub = PubSub.getInstance();
+    // End Singleton Pattern Declaration
+    private final ArrayList<SceneItem> inventory = new ArrayList<>();
+
+    private InventoryController() {
+    }
+
     public static InventoryController getInstance() {
         if (instance == null) instance = new InventoryController();
         return instance;
     }
-    // End Singleton Pattern Declaration
-
-    PubSub pubSub = PubSub.getInstance();
-
-    private ArrayList<SceneItem> inventory = new ArrayList<>();
-
-    private InventoryController() { }
 
     /**
      * Add item to inventory
@@ -44,7 +44,7 @@ public class InventoryController {
      * @param scene the scene
      */
     public void dropItemFromInventory(Item item, Scene scene) {
-        SceneItem entry = inventory.stream().filter(x->{
+        SceneItem entry = inventory.stream().filter(x -> {
             return x.getItem().equals(item) && x.getScene().equals(scene);
         }).findFirst().orElse(null);
 
@@ -75,14 +75,14 @@ public class InventoryController {
     public void printInventory() {
         ArrayList<SceneItem> inventory = getInventory();
         Map<String, Long> freqInventory = inventory.stream()
-                .collect(Collectors.groupingBy(e->e.getItem().getName(), Collectors.counting()));
+                .collect(Collectors.groupingBy(e -> e.getItem().getName(), Collectors.counting()));
         System.out.println("Du har følgende i dit inventory:");
 
         freqInventory.entrySet().forEach(e -> {
-            System.out.printf("%s   ", (e.getValue() > 1) ? e.getKey() + "×" + e.getValue() : e.getKey() );
+            System.out.printf("%s   ", (e.getValue() > 1) ? e.getKey() + "×" + e.getValue() : e.getKey());
         });
 
-        System.out.println("");
+        System.out.println();
     }
 
     /**
@@ -91,11 +91,11 @@ public class InventoryController {
      * @return the boolean
      */
     public boolean containsOnlyTrash() {
-        for (SceneItem entry: inventory) {
-            if(
-                entry.getItem().getItemType() != ItemType.TRASH &&
-                entry.getItem().getItemType() != ItemType.PLASTIC &&
-                entry.getItem().getItemType()  != ItemType.METAL
+        for (SceneItem entry : inventory) {
+            if (
+                    entry.getItem().getItemType() != ItemType.TRASH &&
+                            entry.getItem().getItemType() != ItemType.PLASTIC &&
+                            entry.getItem().getItemType() != ItemType.METAL
             ) {
                 return false;
             }
@@ -113,8 +113,8 @@ public class InventoryController {
      */
     public boolean containsRoomItem(Scene scene, Item item) {
 
-        for(SceneItem entry : inventory) {
-            if(entry.getItem() == item && entry.getScene() == scene) {
+        for (SceneItem entry : inventory) {
+            if (entry.getItem() == item && entry.getScene() == scene) {
                 return true;
             }
         }

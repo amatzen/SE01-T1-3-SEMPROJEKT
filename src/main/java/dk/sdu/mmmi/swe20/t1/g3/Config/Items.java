@@ -1,13 +1,9 @@
 package dk.sdu.mmmi.swe20.t1.g3.Config;
 
-import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
 import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import io.github.techrobby.SimplePubSub.PubSub;
-import javafx.scene.Scene;
-import javafx.scene.shape.Box;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +18,8 @@ public enum Items {
             Map.of(
                 "start", new SceneLocation(430,560),
                 "skov", new SceneLocation(800,500),
-                    "strandv2", new SceneLocation(600, 100),
-                    "klippekant", new SceneLocation(200,600)
+                "strandv2", new SceneLocation(600, 100),
+                "klippekant", new SceneLocation(200,600)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -36,8 +32,8 @@ public enum Items {
                 "strand", new SceneLocation(500,300),
                 "koralrev", new SceneLocation(250, 600),
                 "skibsvrag", new SceneLocation(200, 600),
-                    "klippekant", new SceneLocation(500, 600),
-                    "strandv2", new SceneLocation(790, 600)
+                "klippekant", new SceneLocation(500, 600),
+                "strandv2", new SceneLocation(790, 600)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -47,11 +43,11 @@ public enum Items {
             "Views/Items/PLASTIKFLASKE.png",
             ItemType.PLASTIC,
             Map.of(
-                    "hav", new SceneLocation(400, 360),
-                    "klippekant", new SceneLocation(800, 600),
-                    "skibsvrag", new SceneLocation(1200, 700),
-                    "koralrev", new SceneLocation(800, 600),
-                    "klippetop", new SceneLocation(700, 430)
+                "hav", new SceneLocation(400, 360),
+                "klippekant", new SceneLocation(800, 600),
+                "skibsvrag", new SceneLocation(1200, 700),
+                "koralrev", new SceneLocation(800, 600),
+                "klippetop", new SceneLocation(700, 430)
             ),
         ItemAction.PICKUPABLE
     ),
@@ -61,11 +57,11 @@ public enum Items {
             "Views/Items/PLASTIKBUNKE.png",
             ItemType.PLASTIC,
             Map.of(
-                    "start", new SceneLocation(400, 360),
-                    "skibsvrag", new SceneLocation(300, 600),
-                    "koralrev", new SceneLocation(250, 450),
-                    "klippekant", new SceneLocation(150, 500),
-                    "strandv2", new SceneLocation(1000, 515)
+                "start", new SceneLocation(400, 360),
+                "skibsvrag", new SceneLocation(300, 600),
+                "koralrev", new SceneLocation(250, 450),
+                "klippekant", new SceneLocation(150, 500),
+                "strandv2", new SceneLocation(1000, 515)
             ),
             ItemAction.PICKUPABLE
     ),
@@ -75,11 +71,11 @@ public enum Items {
             "Views/Items/BLÅMUSLING.png",
             ItemType.BIO,
             Map.of(
-                    "strand", new SceneLocation(400, 550),
-                    "skibsvrag", new SceneLocation(1200, 440),
-                    "strandv2", new SceneLocation(250, 450),
-                    "skov", new SceneLocation(1200, 300),
-                    "klippekant", new SceneLocation(800, 450)
+                "strand", new SceneLocation(400, 550),
+                "skibsvrag", new SceneLocation(1200, 440),
+                "strandv2", new SceneLocation(250, 450),
+                "skov", new SceneLocation(1200, 300),
+                "klippekant", new SceneLocation(800, 450)
             ),
             ItemAction.PICKUPABLE
     ),

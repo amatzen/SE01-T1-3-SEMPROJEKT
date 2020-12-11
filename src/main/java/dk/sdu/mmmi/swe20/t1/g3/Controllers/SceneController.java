@@ -11,24 +11,23 @@ import java.util.stream.Collectors;
 public class SceneController {
     // Singleton Pattern Declaration
     public static SceneController instance = null;
-    public static SceneController getInstance() {
-        if (instance == null) instance = new SceneController();
-        return instance;
-    }
+    private final ArrayList<Scene> scenes = new ArrayList<>();
     // End Singleton Pattern Declaration
-
-    private ArrayList<Scene> scenes = new ArrayList<>();
     private Scene currentScene;
-
-    private PubSub pubSub = PubSub.getInstance();
+    private final PubSub pubSub = PubSub.getInstance();
 
     private SceneController() {
-        for(Scenes scene : Scenes.values()) {
+        for (Scenes scene : Scenes.values()) {
             scenes.add(new Scene(scene.getSlug(), scene.getName(), scene.getDescription(), scene.getSceneURL(), scene.getExitsString()));
         }
 
         this.convertStringsToScenes();
-    };
+    }
+
+    public static SceneController getInstance() {
+        if (instance == null) instance = new SceneController();
+        return instance;
+    }
 
     /*
      * Convert foreign key strings to objects
@@ -40,7 +39,7 @@ public class SceneController {
             HashMap<String, Scene> sce = new HashMap<String, Scene>(
                     data.entrySet().stream()
                             .filter(s -> s.getKey() != null & s.getValue() != null)
-                            .collect(Collectors.toMap(e->e.getKey(), e->getSceneBySlug(e.getValue())))
+                            .collect(Collectors.toMap(e -> e.getKey(), e -> getSceneBySlug(e.getValue())))
             );
 
             scene.setExits(sce);
@@ -62,7 +61,7 @@ public class SceneController {
     }
 
     public void goToScene(Scene scene) throws Exception {
-        if( !scenes.contains(scene) ) {
+        if (!scenes.contains(scene)) {
             throw new Exception("Scene not found");
         }
 

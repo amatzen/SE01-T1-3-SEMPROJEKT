@@ -9,22 +9,16 @@ import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ItemController {
     // Singleton Pattern Declaration
     public static ItemController instance = null;
-    public static ItemController getInstance() {
-        if (instance == null) instance = new ItemController();
-        return instance;
-    }
+    private final ArrayList<Item> items = new ArrayList<Item>();
     // End Singleton Pattern Declaration
 
-    private ArrayList<Item> items = new ArrayList<Item>();
-
     private ItemController() {
-        for (Items item: Items.values()) {
-            if(item.getItemAction() == ItemAction.INTERACTABLE) {
+        for (Items item : Items.values()) {
+            if (item.getItemAction() == ItemAction.INTERACTABLE) {
                 items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction(), item.getRunnable()));
             } else {
                 items.add(new Item(item.getSlug(), item.getName(), item.getTexture(), item.getItemType(), item.getSpawns(), item.getItemAction()));
@@ -32,12 +26,17 @@ public class ItemController {
         }
     }
 
+    public static ItemController getInstance() {
+        if (instance == null) instance = new ItemController();
+        return instance;
+    }
+
     public void removeSceneFromItem(Item item, Scene scene) {
         HashMap<Scene, SceneLocation> initialSpawns = item.getSpawns();
         HashMap<Scene, SceneLocation> newSpawns = new HashMap<>();
 
         for (Map.Entry<Scene, SceneLocation> e : initialSpawns.entrySet()) {
-            if( e.getKey() != scene ) {
+            if (e.getKey() != scene) {
                 newSpawns.put(e.getKey(), e.getValue());
             }
         }
@@ -54,7 +53,7 @@ public class ItemController {
 
         for (Item item : items) {
             for (Map.Entry<Scene, SceneLocation> e : item.getSpawns().entrySet()) {
-                if(e.getKey() == scene) {
+                if (e.getKey() == scene) {
                     itemsInScene.add(item);
                 }
             }
@@ -67,7 +66,7 @@ public class ItemController {
         boolean hasItem = false;
 
         ArrayList<Item> itemsInScene = getItemsByScene(sceneSlug);
-        for (Item item: itemsInScene) {
+        for (Item item : itemsInScene) {
             if (item.getSlug().equals(itemSlug)) {
                 hasItem = true;
                 break;
