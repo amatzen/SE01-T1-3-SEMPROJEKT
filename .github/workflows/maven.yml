@@ -34,8 +34,8 @@ jobs:
 
     - name: Download OpenJDK 15
       run: |
-        wget -O libs/win https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_windows-x64_bin.zip
-        wget -O libs/mac https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_osx-x64_bin.tar.gz
+        wget -O libs/win/openjdk-15.0.0.1_windows-x64_bin.zip https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_windows-x64_bin.zip
+        wget -O libs/mac/openjdk-15.0.1_osx-x64_bin.tar.gz https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_osx-x64_bin.tar.gz
 
     - name: Extract ZIP
       uses: TonyBogdanov/zip@1.0
