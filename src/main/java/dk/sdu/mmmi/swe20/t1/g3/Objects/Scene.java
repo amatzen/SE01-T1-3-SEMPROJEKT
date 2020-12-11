@@ -3,6 +3,8 @@ package dk.sdu.mmmi.swe20.t1.g3.Objects;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemAction;
+import dk.sdu.mmmi.swe20.t1.g3.Types.ItemType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +41,7 @@ public class Scene extends worldofzuul.Room {
             System.out.println("");
             System.out.println("I dette rum ser du:");
             for (Item item: itemsNotPickedUp) {
-                System.out.println(item.getName());
+                System.out.println(item.getName() + (item.getItemAction() == ItemAction.INTERACTABLE ?" (Kan ikke samles op)" : ""));
             }
         }
 
