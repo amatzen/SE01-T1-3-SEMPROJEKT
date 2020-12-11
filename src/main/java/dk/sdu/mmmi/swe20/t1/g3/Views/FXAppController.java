@@ -6,8 +6,6 @@ import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
 import dk.sdu.mmmi.swe20.t1.g3.Main;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Item;
 import dk.sdu.mmmi.swe20.t1.g3.Objects.Scene;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.FXUtils;
-import dk.sdu.mmmi.swe20.t1.g3.Utilities.Game;
 import dk.sdu.mmmi.swe20.t1.g3.Utilities.SceneLocation;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.Player;
 import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerAction;
@@ -15,10 +13,7 @@ import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerActionIdenticator;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -29,10 +24,10 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -153,7 +148,6 @@ public class FXAppController implements Initializable {
     private void onSceneChange(Object payload) {
         Scene s = sceneController.getSceneBySlug((String) payload);
 
-
         Platform.runLater(() ->  {
             // Set background
             if(s.getSceneURL() != "") {
@@ -202,24 +196,6 @@ public class FXAppController implements Initializable {
     }
     public ArrayList<Rectangle> getItemsSpawned() {
         return itemsSpawned;
-    }
-
-    /**
-     * Sets game window.
-     *
-     * @param scene the scene
-     */
-    @FXML
-    public void setGameWindow(String scene) {
-        GameWindow.getChildren().clear();
-        try {
-            ClassLoader classLoader = FXMLLoader.getDefaultClassLoader();
-            URL url = classLoader.getResource(scene);
-            GameWindow.getChildren().setAll((Collection<? extends Node>) FXMLLoader.load(url));
-            GameWindow.setStyle("-fx-background-color: aliceblue;");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
     }
 
     /*
