@@ -1,11 +1,9 @@
-### Onsdag - Projektarbjede
+### Torsdag - Projektarbjede
 **Sted:** Der hjemme.   
-**Tidspunkt:** 7:30 til Heledagen   
-**Forberedelse:**  Alexander skulle kigge på hvordan man laver maps på vores produkt og lave player-actions færdig, Simon kigge på hvordan vi får vore main player ind og hvordan det fungere Frederik G var også med til det, Christian fik til opgave at han skulle lave Skralspand funktionerne og skulle lave et skin til Skralspanden plus at skrive noteblock.
+**Tidspunkt:** 10:00 til Heledagen   
+**Forberedelse:**  lav på kode
 **Dagsorden:**  produktudvidkling.
 **Tilstede:** Alexander, Christian, Frederik B, Simon og Frederik G,
-**Referat:** der er Online møde der blevet lavde på koden maps er kommet ind skralspand er blevet lavet og nogle af dens funkrioner er inde Simon stå for at lave main-char og frederik g var nød til at lave nogle af maperne om og vi fandt også ud af hvad vi skulle lave og hvad vi stadigvæk mangler.
-
-lektier: lav så meget som mulight gælder for alle.
-
+**Referat:**  bagefter at vi var til TA2 i oop gik vi hjem og lavet Projektarbjede hvor vi havde et fokus på de sidste ting der blev lavde flere for skellige items der kunne tages op heraf muslinger og bunkeskrald dette stå Frederik B og Christian for simon var i gang med in game manu,
+Alexander finepusset meget af koden og lavde nogle flere ting til spillet, der blev tilføjet player plus costume til player, der blev også lavet slutskærm.
 **Afholdt:** Online møde
