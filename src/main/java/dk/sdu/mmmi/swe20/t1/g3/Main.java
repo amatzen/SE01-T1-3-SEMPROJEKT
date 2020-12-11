@@ -52,11 +52,14 @@ public class Main extends Application {
             }
         });
         stage.show();
+
+        PubSub.getInstance().addListener("exitApplication", (type, object) -> {
+            stop();
+        });
     }
 
     @Override
     public void stop(){
-        pubSub.publish("exitApplication", true);
         gameThread.interrupt();
         System.exit(0);
     }

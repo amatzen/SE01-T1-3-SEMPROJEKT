@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.swe20.t1.g3.Utilities;
 
+import dk.sdu.mmmi.swe20.t1.g3.Config.Scenes;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.InventoryController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.ItemController;
 import dk.sdu.mmmi.swe20.t1.g3.Controllers.SceneController;
@@ -68,6 +69,7 @@ public class Game extends worldofzuul.Game {
                 processCommand(parser.getCommandFromString((String) object));
                 System.out.print("> ");
             }));
+            pubSub.addListener("gameFinished", ((type, object) -> finished.set(true)));
             pubSub.addListener("exitApplication", ((type, object) -> {
                 threadpool.shutdownNow();
             }));
@@ -238,6 +240,23 @@ public class Game extends worldofzuul.Game {
 
             System.out.println("Du har nu tømt din taske. Der lå desværre bioaffald i din taske, hvilket ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
             pubSub.publish("fx_notify", "Du har nu tømt din taske!#Der lå desværre bioaffald i din taske, hvilket\n ikke skal smides ud. Nu er alt skraldet kommet tilbage i naturen, prøv igen.");
+        }
+
+        boolean noNonBioItemsLeft = true;
+        for (Scenes scns : Scenes.values()) {
+            Scene s = sceneController.getSceneBySlug(scns.getSlug());
+            ArrayList<Item> items = itemController.getItemsByScene(s);
+
+            for (Item item : items) {
+                if(item.getItemType() != ItemType.BIO && item.getItemType() != ItemType.INTERACTABLE) {
+                    noNonBioItemsLeft = false;
+                }
+            }
+        }
+
+        if(noNonBioItemsLeft) {
+            System.out.printf("Yees!");
+            pubSub.publish("gameFinished", true);
         }
 
     }

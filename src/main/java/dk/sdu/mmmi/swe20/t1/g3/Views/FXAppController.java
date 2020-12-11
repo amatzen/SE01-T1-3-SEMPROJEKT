@@ -13,10 +13,14 @@ import dk.sdu.mmmi.swe20.t1.g3.Views.Objects.PlayerActionIdenticator;
 import io.github.techrobby.SimplePubSub.PubSub;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+import java.awt.*;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -108,6 +113,23 @@ public class FXAppController implements Initializable {
             });
         });
 
+        pubSub.addListener("gameFinished", ((type, object) -> {
+            Platform.runLater(() -> {
+                try {
+                    Rectangle box = new Rectangle(1400, 900);
+
+                    InputStream is = Main.class.getResourceAsStream("Views/Assets/EndScene.png");
+                    Image img = new Image(is);
+
+                    box.setFill(new ImagePattern(img));
+
+                    AppWindow.getChildren().add(box);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }));
+
         pubSub.publish("fx_sceneChanged", sceneController.getCurrentScene().getSlug());
         spawnPlayer();
     }
@@ -168,7 +190,6 @@ public class FXAppController implements Initializable {
                     GameWindow.getChildren().remove(0);
 
                 GameWindow.getChildren().add(backdrop);
-
             }
         });
 
