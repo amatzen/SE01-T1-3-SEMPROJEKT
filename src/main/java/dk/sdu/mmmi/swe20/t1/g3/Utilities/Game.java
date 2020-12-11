@@ -153,7 +153,7 @@ public class Game extends worldofzuul.Game {
             Item item = itemController.getItemBySlug(itemSlug);
             inventoryController.addToInventory(item, currentScene);
             String feedbackMessage = item.getItemType() != ItemType.BIO ?
-                    "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!\nSmid affaldet ud, når du har fundet det hele!\nSammen kan vi redde livet i havet"
+                    "Jaaa, hvor er du god! Tak fordi du samlede " + item.getName() + " op!\nSmid affaldet ud i skraldespanden hvor du startede, når du har fundet det hele!\nSammen kan vi redde livet i havet"
                     :
                     "Er du sikker på, at " + item.getName() + " ikke hører til i naturen?\nAnyways, " + item.getName() + " ligger nu i dit inventory!";
             pubSub.publish("fx_notify", String.format("Ting samlet op#%s", feedbackMessage));
